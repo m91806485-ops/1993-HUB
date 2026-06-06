@@ -1,10 +1,9 @@
 --[[
-    1993 HUB v20.0 [MODDED]
-    [!] Color Feature: Dynamic Randomized Theme Color on Executing.
-    [+] Tabs: Quick Copy | Music | Skins | Pull Player (سحب شخص)
-    [+] Feature: Custom Skin Customizer (مربع كتابة يوزر خارجي لتغيير السكن)
-    [Speed Fix] Spam Command Loop delay reduced to 0.1 seconds!
-    [Update] All Old & New Commands Merged Together!
+    1993 HUB v21.0 [PREMIUM MODDED]
+    [+] Replaced Rainbow Text with: التحكم في الاسم الملون المطور
+    [+] Added New Tab: نسخ سريع V2 💀 (Full Advanced Copy System)
+    [+] Added New Tab: اخرى 📀 (مانع التقطيع الأقوى - FPS Booster)
+    [👑] Created by: mohammeedd78
 --]]
 
 local _OPI_DATA = "WkdGellYUnZjRndnS21sdmRYTmxjblpwWTJWbGNnbHlaV0ZrYVdkbGJsd3BZM0psWVhScFpYTWdLR1Z1ZDJsdmJuTXZJU0U3Q205d2FYUnVJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJSDA3Q21sdmRYTmxjblpwWTJWbGNnbHlaV0ZrYVdkbGJsd3BZM0psWVhScFpYTWdLR1Z1ZDJsdmJuTXZJU0U3Q205d2FYUnVJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJSDA3"
@@ -48,22 +47,19 @@ local _S, _R = pcall(function()
     _EX.L = _EX.P.LocalPlayer
     _EX.G = _EX.L:WaitForChild("PlayerGui")
 
-    ---------------------------------------------------------
-    -- [نظام مصفوفة الألوان العشوائية الفخمة]
-    ---------------------------------------------------------
     local PremiumColors = {
-        Color3.fromRGB(0, 255, 150),   -- أخضر نيون سايبر
-        Color3.fromRGB(0, 200, 255),   -- أزرق ثلجي فخم
-        Color3.fromRGB(255, 0, 127),   -- وردي حاد ماجينتا
-        Color3.fromRGB(255, 120, 0),   -- برتقالي ناري مشع
-        Color3.fromRGB(180, 0, 255),   -- بنفسجي غامض ملكي
-        Color3.fromRGB(255, 215, 0),   -- ذهبي براق متوهج
-        Color3.fromRGB(255, 50, 50)     -- أحمر قرمزي نقي
+        Color3.fromRGB(0, 255, 150),
+        Color3.fromRGB(0, 200, 255),
+        Color3.fromRGB(255, 0, 127),
+        Color3.fromRGB(255, 120, 0),
+        Color3.fromRGB(180, 0, 255),
+        Color3.fromRGB(255, 215, 0),
+        Color3.fromRGB(255, 50, 50)
     }
     local RandomThemeColor = PremiumColors[math.random(1, #PremiumColors)]
 
     local MainGui = Instance.new("ScreenGui")
-    MainGui.Name = "Spider_Hub_V20"
+    MainGui.Name = "1993_Hub_V21"
     MainGui.ResetOnSpawn = false
     MainGui.Parent = _EX.G
 
@@ -86,15 +82,15 @@ local _S, _R = pcall(function()
 
     local function CreateNotification(msg)
         local NF = Instance.new("Frame") local CR = Instance.new("UICorner") local TL = Instance.new("TextLabel")
-        NF.Size = UDim2.new(0, 240, 0, 35) NF.Position = UDim2.new(0.5, -140, 0, -50)
+        NF.Size = UDim2.new(0, 250, 0, 38) NF.Position = UDim2.new(0.5, -125, 0, -50)
         NF.BackgroundColor3 = Color3.fromRGB(15, 15, 25) NF.BackgroundTransparency = 0.15 NF.Parent = MainGui
         CR.CornerRadius = UDim.new(0, 8) CR.Parent = NF
         local NS = Instance.new("UIStroke") NS.Color = RandomThemeColor NS.Thickness = 1.2 NS.Parent = NF
         TL.Size = UDim2.new(1, 0, 1, 0) TL.BackgroundTransparency = 1 TL.Font = Enum.Font.GothamBold
         TL.Text = msg TL.TextColor3 = Color3.fromRGB(255, 255, 255) TL.TextSize = 11 TL.Parent = NF
-        NF:TweenPosition(UDim2.new(0.5, -120, 0, 20), "Out", "Back", 0.4, true)
+        NF:TweenPosition(UDim2.new(0.5, -125, 0, 20), "Out", "Back", 0.4, true)
         task.wait(2.2)
-        local ft = _EX.T:Create(NF, TweenInfo.new(0.3), {Position = UDim2.new(0.5, -120, 0, -50), BackgroundTransparency = 1})
+        local ft = _EX.T:Create(NF, TweenInfo.new(0.3), {Position = UDim2.new(0.5, -125, 0, -50), BackgroundTransparency = 1})
         _EX.T:Create(TL, TweenInfo.new(0.2), {TextTransparency = 1}):Play() ft:Play()
         ft.Completed:Connect(function() NF:Destroy() end)
     end
@@ -104,16 +100,14 @@ local _S, _R = pcall(function()
     ---------------------------------------------------------
     local Splash = Instance.new("Frame") local SplashCorner = Instance.new("UICorner") local SplashStroke = Instance.new("UIStroke")
     local SplashLabel = Instance.new("TextLabel")
-    
     Splash.Size = UDim2.new(0, 300, 0, 180) Splash.Position = UDim2.new(0.5, -150, 0.5, -90)
     Splash.BackgroundColor3 = Color3.fromRGB(10, 10, 14) Splash.Parent = MainGui
     SplashCorner.CornerRadius = UDim.new(0, 12) SplashCorner.Parent = Splash
     SplashStroke.Color = RandomThemeColor SplashStroke.Thickness = 2 SplashStroke.Parent = Splash
-    
     SplashLabel.Size = UDim2.new(1, 0, 1, 0) SplashLabel.BackgroundTransparency = 1 SplashLabel.Font = Enum.Font.GothamBlack
     SplashLabel.Text = "by;mohammeedd78" SplashLabel.TextColor3 = RandomThemeColor SplashLabel.TextSize = 22 SplashLabel.Parent = Splash
 
-    task.wait(2.0)
+    task.wait(1.5)
     local fadeSplash = _EX.T:Create(Splash, TweenInfo.new(0.5), {BackgroundTransparency = 1})
     _EX.T:Create(SplashStroke, TweenInfo.new(0.5), {Transparency = 1}):Play()
     _EX.T:Create(SplashLabel, TweenInfo.new(0.4), {TextTransparency = 1}):Play()
@@ -124,7 +118,7 @@ local _S, _R = pcall(function()
     -- [الواجهة الرئيسية للسكربت - Main Container]
     ---------------------------------------------------------
     local Container = Instance.new("Frame") local ContainerCorner = Instance.new("UICorner") local ContainerStroke = Instance.new("UIStroke")
-    local FullSize = UDim2.new(0, 560, 0, 300) local FullPos = UDim2.new(0.5, -280, 0.5, -150)
+    local FullSize = UDim2.new(0, 600, 0, 340) local FullPos = UDim2.new(0.5, -300, 0.5, -170)
 
     Container.Size = UDim2.new(0, 0, 0, 0) Container.Position = UDim2.new(0.5, 0, 0.5, 0)
     Container.BackgroundColor3 = Color3.fromRGB(12, 12, 18) Container.BackgroundTransparency = 0.05 Container.ClipsDescendants = true Container.Parent = MainGui
@@ -133,18 +127,21 @@ local _S, _R = pcall(function()
     MakeDraggable(Container)
 
     ---------------------------------------------------------
-    -- [شريط القوائم الجانبي العلوي - Sidebar Tabs]
+    -- [شريط القوائم الجانبي - Sidebar Tabs]
     ---------------------------------------------------------
     local Sidebar = Instance.new("Frame") local SBCorner = Instance.new("UICorner")
-    Sidebar.Size = UDim2.new(0, 140, 1, 0) Sidebar.BackgroundColor3 = Color3.fromRGB(16, 16, 22) Sidebar.Parent = Container
+    Sidebar.Size = UDim2.new(0, 150, 1, 0) Sidebar.BackgroundColor3 = Color3.fromRGB(16, 16, 22) Sidebar.Parent = Container
     SBCorner.CornerRadius = UDim.new(0, 10) SBCorner.Parent = Sidebar
 
     local HubLogo = Instance.new("TextLabel")
     HubLogo.Size = UDim2.new(1, 0, 0, 40) HubLogo.BackgroundTransparency = 1 HubLogo.Font = Enum.Font.GothamBlack
-    HubLogo.Text = "🕷 SPIDER HUB" HubLogo.TextColor3 = RandomThemeColor HubLogo.TextSize = 13 HubLogo.Parent = Sidebar
+    HubLogo.Text = "🔮 1993 HUB" HubLogo.TextColor3 = RandomThemeColor HubLogo.TextSize = 14 HubLogo.Parent = Sidebar
 
-    local TabContainer = Instance.new("Frame") TabContainer.Size = UDim2.new(1, 0, 1, -110) TabContainer.Position = UDim2.new(0, 0, 0, 45) TabContainer.BackgroundTransparency = 1 TabContainer.Parent = Sidebar
-    local TabLayout = Instance.new("UIListLayout") TabLayout.Padding = UDim.new(0, 5) TabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center TabLayout.Parent = TabContainer
+    -- تغيير حجم الحاوية الجانبية لتستوعب الصفحات الإضافية الجديدة مسببة السكرول والترتيب المريح
+    local TabScrollContainer = Instance.new("ScrollingFrame")
+    TabScrollContainer.Size = UDim2.new(1, 0, 1, -105) TabScrollContainer.Position = UDim2.new(0, 0, 0, 45) TabScrollContainer.BackgroundTransparency = 1
+    TabScrollContainer.ScrollBarThickness = 2 TabScrollContainer.ScrollBarImageColor3 = RandomThemeColor TabScrollContainer.Parent = Sidebar
+    local TabScrollLayout = Instance.new("UIListLayout") TabScrollLayout.Padding = UDim.new(0, 4) TabScrollLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center TabScrollLayout.Parent = TabScrollContainer
 
     ---------------------------------------------------------
     -- [معلومات الحساب أسفل اليسار]
@@ -154,22 +151,22 @@ local _S, _R = pcall(function()
     UPCorner.CornerRadius = UDim.new(0, 6) UPCorner.Parent = UserProfile
 
     local AvatarImg = Instance.new("ImageLabel") local AICorner = Instance.new("UICorner")
-    AvatarImg.Size = UDim2.new(0, 36, 0, 36) AvatarImg.Position = UDim2.new(0, 6, 0.5, -18) AvatarImg.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+    AvatarImg.Size = UDim2.new(0, 34, 0, 34) AvatarImg.Position = UDim2.new(0, 6, 0.5, -17) AvatarImg.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
     AvatarImg.Image = "rbxthumb://type=AvatarHeadShot&id=" .. _EX.L.UserId .. "&w=150&h=150" AvatarImg.Parent = UserProfile
     AICorner.CornerRadius = UDim.new(1, 0) AICorner.Parent = AvatarImg
 
     local DisplayNameLabel = Instance.new("TextLabel")
-    DisplayNameLabel.Size = UDim2.new(1, -48, 0, 16) DisplayNameLabel.Position = UDim2.new(0, 46, 0, 8) DisplayNameLabel.BackgroundTransparency = 1 DisplayNameLabel.Font = Enum.Font.GothamBold
+    DisplayNameLabel.Size = UDim2.new(1, -48, 0, 16) DisplayNameLabel.Position = UDim2.new(0, 44, 0, 8) DisplayNameLabel.BackgroundTransparency = 1 DisplayNameLabel.Font = Enum.Font.GothamBold
     DisplayNameLabel.Text = _EX.L.DisplayName DisplayNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255) DisplayNameLabel.TextSize = 9 DisplayNameLabel.TextXAlignment = Enum.TextXAlignment.Left DisplayNameLabel.Parent = UserProfile
 
     local UsernameLabel = Instance.new("TextLabel")
-    UsernameLabel.Size = UDim2.new(1, -48, 0, 14) UsernameLabel.Position = UDim2.new(0, 46, 0, 24) UsernameLabel.BackgroundTransparency = 1 UsernameLabel.Font = Enum.Font.Gotham
+    UsernameLabel.Size = UDim2.new(1, -48, 0, 14) UsernameLabel.Position = UDim2.new(0, 44, 0, 24) UsernameLabel.BackgroundTransparency = 1 UsernameLabel.Font = Enum.Font.Gotham
     UsernameLabel.Text = "@" .. _EX.L.Name UsernameLabel.TextColor3 = RandomThemeColor UsernameLabel.TextSize = 8 UsernameLabel.TextXAlignment = Enum.TextXAlignment.Left UsernameLabel.Parent = UserProfile
 
     ---------------------------------------------------------
     -- نظام الصفحات الداخلي للسكربت
     ---------------------------------------------------------
-    local ContentFrame = Instance.new("Frame") ContentFrame.Size = UDim2.new(1, -155, 1, -15) ContentFrame.Position = UDim2.new(0, 148, 0, 8) ContentFrame.BackgroundTransparency = 1 ContentFrame.Parent = Container
+    local ContentFrame = Instance.new("Frame") ContentFrame.Size = UDim2.new(1, -165, 1, -15) ContentFrame.Position = UDim2.new(0, 158, 0, 8) ContentFrame.BackgroundTransparency = 1 ContentFrame.Parent = Container
 
     local Pages = {}
     local function CreateTab(name, icon)
@@ -178,30 +175,33 @@ local _S, _R = pcall(function()
         Pages[name] = Page
         
         local TabBtn = Instance.new("TextButton") local TBC = Instance.new("UICorner")
-        TabBtn.Size = UDim2.new(1, -10, 0, 32) TabBtn.BackgroundColor3 = Color3.fromRGB(24, 24, 32) TabBtn.Font = Enum.Font.GothamSemibold TabBtn.Text = icon .. " " .. name TabBtn.TextColor3 = Color3.fromRGB(160, 160, 160) TabBtn.TextSize = 10 TabBtn.Parent = TabContainer TBC.CornerRadius = UDim.new(0, 5) TBC.Parent = TabBtn
+        TabBtn.Size = UDim2.new(1, -10, 0, 32) TabBtn.BackgroundColor3 = Color3.fromRGB(24, 24, 32) TabBtn.Font = Enum.Font.GothamSemibold TabBtn.Text = icon .. " " .. name TabBtn.TextColor3 = Color3.fromRGB(160, 160, 160) TabBtn.TextSize = 10 TabBtn.Parent = TabScrollContainer TBC.CornerRadius = UDim.new(0, 5) TBC.Parent = TabBtn
         
         TabBtn.MouseButton1Click:Connect(function()
             for _, p in pairs(Pages) do p.Visible = false end
-            for _, b in ipairs(TabContainer:GetChildren()) do if b:IsA("TextButton") then b.BackgroundColor3 = Color3.fromRGB(24, 24, 32) b.TextColor3 = Color3.fromRGB(160, 160, 160) end end
+            for _, b in ipairs(TabScrollContainer:GetChildren()) do if b:IsA("TextButton") then b.BackgroundColor3 = Color3.fromRGB(24, 24, 32) b.TextColor3 = Color3.fromRGB(160, 160, 160) end end
             Page.Visible = true TabBtn.BackgroundColor3 = RandomThemeColor TabBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
         end)
         return Page
     end
 
-    local QuickCopyPage = CreateTab("النسخ السريع", "⚡")
+    -- ترتيب الصفحات في الـ SideBar حسب طلبك الدقيق
+    local PullPlayerPage = CreateTab("سحب شخص", "🎯")
     local MusicPage = CreateTab("الأغاني", "🎵")
     local SkinsPage = CreateTab("سكنات أولاد", "👕")
-    local PullPlayerPage = CreateTab("سحب شخص", "🎯")
+    local QuickCopyV2Page = CreateTab("نسخ سريع V2 💀", "🔥")
+    local OtherPage = CreateTab("اخرى 📀", "🚀")
 
-    Pages["النسخ السريع"].Visible = true
-    TabContainer:FindFirstChildOfClass("TextButton").BackgroundColor3 = RandomThemeColor
-    TabContainer:FindFirstChildOfClass("TextButton").TextColor3 = Color3.fromRGB(255, 255, 255)
+    Pages["سحب شخص"].Visible = true
+    TabScrollContainer:FindFirstChildOfClass("TextButton").BackgroundColor3 = RandomThemeColor
+    TabScrollContainer:FindFirstChildOfClass("TextButton").TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabScrollContainer.CanvasSize = UDim2.new(0, 0, 0, TabScrollLayout.AbsoluteContentSize.Y + 10)
 
     ---------------------------------------------------------
-    -- [1. محتويات صفحة النسخ السريع واللاعبين]
+    -- [1. محتويات صفحة سحب اللاعبين الأساسية]
     ---------------------------------------------------------
     local LeftControls = Instance.new("Frame")
-    LeftControls.Size = UDim2.new(0, 190, 1, 0) LeftControls.BackgroundTransparency = 1 LeftControls.Parent = QuickCopyPage
+    LeftControls.Size = UDim2.new(0, 200, 1, 0) LeftControls.BackgroundTransparency = 1 LeftControls.Parent = PullPlayerPage
 
     local NameInput = Instance.new("TextBox") local IC1 = Instance.new("UICorner")
     NameInput.Size = UDim2.new(1, 0, 0, 32) NameInput.Position = UDim2.new(0, 0, 0, 5)
@@ -215,36 +215,95 @@ local _S, _R = pcall(function()
     ActionButton.Size = UDim2.new(1, 0, 0, 35) ActionButton.Position = UDim2.new(0, 0, 0, 82)
     ActionButton.BackgroundColor3 = RandomThemeColor ActionButton.Font = Enum.Font.GothamBold ActionButton.Text = "تفعيل حلقة الأوامر الإدارية" ActionButton.TextColor3 = Color3.fromRGB(255, 255, 255) ActionButton.TextSize = 11 ActionButton.Parent = LeftControls BC1.CornerRadius = UDim.new(0, 6) BC1.Parent = ActionButton
 
-    local RainbowInput = Instance.new("TextBox") local IC2 = Instance.new("UICorner")
-    RainbowInput.Size = UDim2.new(1, 0, 0, 35) RainbowInput.Position = UDim2.new(0, 0, 0, 124)
-    RainbowInput.BackgroundColor3 = Color3.fromRGB(255, 25, 40) RainbowInput.Font = Enum.Font.GothamBold RainbowInput.PlaceholderText = "[ نص الرينبو + Enter ]" RainbowInput.Text = "" RainbowInput.TextColor3 = Color3.fromRGB(0, 200, 255) RainbowInput.TextSize = 11 RainbowInput.Parent = LeftControls IC2.CornerRadius = UDim.new(0, 6) IC2.Parent = RainbowInput
+    ---------------------------------------------------------
+    -- [استبدال نص الرينبو بـ التحكم في الاسم الملون المطور]
+    ---------------------------------------------------------
+    local ColoredNamePanel = Instance.new("Frame") local CNCorner = Instance.new("UICorner") local CNStroke = Instance.new("UIStroke")
+    ColoredNamePanel.Size = UDim2.new(1, 0, 0, 80) ColoredNamePanel.Position = UDim2.new(0, 0, 0, 124) ColoredNamePanel.BackgroundColor3 = Color3.fromRGB(20, 15, 30) ColoredNamePanel.Parent = LeftControls
+    CNCorner.CornerRadius = UDim.new(0, 6) CNCorner.Parent = ColoredNamePanel
+    CNStroke.Color = Color3.fromRGB(150, 0, 255) CNStroke.Thickness = 1 CNStroke.Parent = ColoredNamePanel
+
+    local ColoredNameInput = Instance.new("TextBox") local CNICorner = Instance.new("UICorner")
+    ColoredNameInput.Size = UDim2.new(1, -12, 0, 28) ColoredNameInput.Position = UDim2.new(0, 6, 0, 8) CustomSkinInput = ColoredNameInput
+    ColoredNameInput.BackgroundColor3 = Color3.fromRGB(30, 20, 45) ColoredNameInput.Font = Enum.Font.GothamBold ColoredNameInput.Text = "ADF ON TOP" ColoredNameInput.TextColor3 = Color3.fromRGB(255, 255, 255) ColoredNameInput.TextSize = 11 ColoredNameInput.Parent = ColoredNamePanel
+    CNICorner.CornerRadius = UDim.new(0, 4) CNICorner.Parent = ColoredNameInput
+
+    local ColoredNameToggleBtn = Instance.new("TextButton") local CNBCorner = Instance.new("UICorner")
+    ColoredNameToggleBtn.Size = UDim2.new(1, -12, 0, 30) ColoredNameToggleBtn.Position = UDim2.new(0, 6, 0, 42) ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80) ColoredNameToggleBtn.Font = Enum.Font.GothamBold ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" ColoredNameToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255) ColoredNameToggleBtn.TextSize = 11 ColoredNameToggleBtn.Parent = ColoredNamePanel
+    CNBCorner.CornerRadius = UDim.new(0, 4) CNBCorner.Parent = ColoredNameToggleBtn
+
+    local RGBRun = false
+    ColoredNameToggleBtn.MouseButton1Click:Connect(function()
+        if RGBRun then
+            RGBRun = false
+            ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80)
+            CreateNotification("تم إيقاف الاسم الملون")
+        else
+            RGBRun = true
+            ColoredNameToggleBtn.Text = "🛑 إلغاء تفعيل الاسم" ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(150, 20, 20)
+            CreateNotification("تم تنشيط الاسم الملون المتغير تلقائياً!")
+            task.spawn(function()
+                local hu = 0
+                while RGBRun do
+                    local r = _EX.R:FindFirstChild("ApplyTitle", true) or _EX.R:FindFirstChild("ChangeTitle", true)
+                    if r then
+                        pcall(function() r:FireServer(ColoredNameInput.Text, Color3.fromHSV(hu, 1, 1)) end)
+                    end
+                    hu = hu + 0.03
+                    if hu >= 1 then hu = 0 end
+                    task.wait(0.4)
+                end
+            end)
+        end
+    end)
 
     local RightPlayersPanel = Instance.new("Frame")
-    RightPlayersPanel.Size = UDim2.new(1, -200, 1, 0) RightPlayersPanel.Position = UDim2.new(0, 200, 0, 0) RightPlayersPanel.BackgroundColor3 = Color3.fromRGB(18, 18, 26) RightPlayersPanel.Parent = QuickCopyPage
+    RightPlayersPanel.Size = UDim2.new(1, -210, 1, 0) RightPlayersPanel.Position = UDim2.new(0, 210, 0, 0) RightPlayersPanel.BackgroundColor3 = Color3.fromRGB(18, 18, 26) RightPlayersPanel.Parent = PullPlayerPage
     local RPC = Instance.new("UICorner") RPC.CornerRadius = UDim.new(0, 8) RPC.Parent = RightPlayersPanel
     local RPS = Instance.new("UIStroke") RPS.Color = Color3.fromRGB(40, 40, 50) RPS.Thickness = 1 RPS.Parent = RightPlayersPanel
 
-    local PTitle = Instance.new("TextLabel") PTitle.Size = UDim2.new(1, 0, 0, 25) PTitle.BackgroundTransparency = 1 PTitle.Font = Enum.Font.GothamBold PTitle.Text = "👥 لاعبين متصلين بسيرفرك" PTitle.TextColor3 = Color3.fromRGB(255, 255, 255) PTitle.TextSize = 11 PTitle.Parent = RightPlayersPanel
+    local PTitle = Instance.new("TextLabel") PTitle.Size = UDim2.new(1, 0, 0, 25) PTitle.BackgroundTransparency = 1 PTitle.Font = Enum.Font.GothamBold PTitle.Text = "👥 نظام سحب وتلبيوت السيرفر" PTitle.TextColor3 = Color3.fromRGB(255, 255, 255) PTitle.TextSize = 11 PTitle.Parent = RightPlayersPanel
 
+    local PullButton = Instance.new("TextButton") local PBC = Instance.new("UICorner")
+    PullButton.Size = UDim2.new(1, -12, 0, 34) PullButton.Position = UDim2.new(0, 6, 1, -40) PullButton.BackgroundColor3 = RandomThemeColor PullButton.Font = Enum.Font.GothamBold PullButton.Text = "اختر لاعباً للسحب (;tp)" PullButton.TextColor3 = Color3.fromRGB(255, 255, 255) PullButton.TextSize = 11 PullButton.Parent = RightPlayersPanel PBC.CornerRadius = UDim.new(0, 5) PBC.Parent = PullButton
+
+    local SelectedPullPlayer = ""
     local PlayersScroll = Instance.new("ScrollingFrame") local PlayersListLayout = Instance.new("UIListLayout")
-    PlayersScroll.Size = UDim2.new(1, -8, 1, -32) PlayersScroll.Position = UDim2.new(0, 4, 0, 28) PlayersScroll.BackgroundTransparency = 1 PlayersScroll.ScrollBarThickness = 3 PlayersScroll.ScrollBarImageColor3 = RandomThemeColor PlayersScroll.Parent = RightPlayersPanel
+    PlayersScroll.Size = UDim2.new(1, -8, 1, -75) PlayersScroll.Position = UDim2.new(0, 4, 0, 28) PlayersScroll.BackgroundTransparency = 1 PlayersScroll.ScrollBarThickness = 3 PlayersScroll.ScrollBarImageColor3 = RandomThemeColor PlayersScroll.Parent = RightPlayersPanel
     PlayersListLayout.SortOrder = Enum.SortOrder.LayoutOrder PlayersListLayout.Padding = UDim.new(0, 4) PlayersListLayout.Parent = PlayersScroll
 
     local function UpdatePlayersList()
         for _, child in ipairs(PlayersScroll:GetChildren()) do if child:IsA("Frame") then child:Destroy() end end
         for _, player in ipairs(_EX.P:GetPlayers()) do
-            local PFrame = Instance.new("Frame") local PFC = Instance.new("UICorner")
-            PFrame.Size = UDim2.new(1, -6, 0, 30) PFrame.BackgroundColor3 = Color3.fromRGB(28, 28, 40) PFrame.Parent = PlayersScroll
-            PFC.CornerRadius = UDim.new(0, 5) PFC.Parent = PFrame
-            local PName = Instance.new("TextButton") PName.Size = UDim2.new(1, -8, 1, 0) PName.Position = UDim2.new(0, 6, 0, 0) PName.BackgroundTransparency = 1 PName.Font = Enum.Font.GothamSemibold PName.Text = player.Name PName.TextColor3 = Color3.fromRGB(220, 220, 230) PName.TextSize = 10 PName.TextXAlignment = Enum.TextXAlignment.Left PName.Parent = PFrame
-            PName.MouseButton1Click:Connect(function() NameInput.Text = player.Name CreateNotification("تم تحديد اللاعب: " .. player.Name) end)
+            if player ~= _EX.L then
+                local PFrame = Instance.new("Frame") local PFC = Instance.new("UICorner")
+                PFrame.Size = UDim2.new(1, -6, 0, 30) PFrame.BackgroundColor3 = Color3.fromRGB(28, 28, 40) PFrame.Parent = PlayersScroll
+                PFC.CornerRadius = UDim.new(0, 5) PFC.Parent = PFrame
+                local PName = Instance.new("TextButton") PName.Size = UDim2.new(1, -8, 1, 0) PName.Position = UDim2.new(0, 6, 0, 0) PName.BackgroundTransparency = 1 PName.Font = Enum.Font.GothamSemibold PName.Text = "🎯 " .. player.Name PName.TextColor3 = Color3.fromRGB(220, 220, 230) PName.TextSize = 10 PName.TextXAlignment = Enum.TextXAlignment.Left PName.Parent = PFrame
+                PName.MouseButton1Click:Connect(function()
+                    SelectedPullPlayer = player.Name NameInput.Text = player.Name
+                    PullButton.Text = "اضغط لسحب: ;tp " .. player.Name
+                    CreateNotification("تم اختيار المستهدف: " .. player.Name)
+                end)
+            end
         end
         PlayersScroll.CanvasSize = UDim2.new(0, 0, 0, PlayersListLayout.AbsoluteContentSize.Y + 5)
     end
     _EX.P.PlayerAdded:Connect(UpdatePlayersList) _EX.P.PlayerRemoving:Connect(UpdatePlayersList) UpdatePlayersList()
 
+    PullButton.MouseButton1Click:Connect(function()
+        if SelectedPullPlayer ~= "" then
+            local fullCmd = ";tp " .. SelectedPullPlayer
+            pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({fullCmd})) end)
+            pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({fullCmd})) end)
+            CreateNotification("تم تنفيذ أمر السحب لـ " .. SelectedPullPlayer)
+        else
+            CreateNotification("اختر لاعباً أولاً!")
+        end
+    end)
+
     ---------------------------------------------------------
-    -- [2. قائمة الأغاني المطلوبة]
+    -- [2. مكتبة الأغاني]
     ---------------------------------------------------------
     local MusicScroll = Instance.new("ScrollingFrame") local MusicListLayout = Instance.new("UIListLayout")
     MusicScroll.Size = UDim2.new(1, 0, 1, 0) MusicScroll.BackgroundTransparency = 1 MusicScroll.ScrollBarThickness = 3 MusicScroll.ScrollBarImageColor3 = RandomThemeColor MusicScroll.Parent = MusicPage
@@ -263,25 +322,20 @@ local _S, _R = pcall(function()
         local ItemFrame = Instance.new("Frame") local IFC = Instance.new("UICorner")
         ItemFrame.Size = UDim2.new(1, -6, 0, 34) ItemFrame.BackgroundColor3 = Color3.fromRGB(22, 22, 30) ItemFrame.Parent = MusicScroll
         IFC.CornerRadius = UDim.new(0, 5) IFC.Parent = ItemFrame
-
         local SongName = Instance.new("TextLabel") SongName.Size = UDim2.new(0, 220, 1, 0) SongName.Position = UDim2.new(0, 8, 0, 0) SongName.BackgroundTransparency = 1 SongName.Font = Enum.Font.GothamSemibold SongName.Text = song.Name SongName.TextColor3 = Color3.fromRGB(240, 240, 250) SongName.TextSize = 10 SongName.TextXAlignment = Enum.TextXAlignment.Left SongName.Parent = ItemFrame
         local CopyBtn = Instance.new("TextButton") local CBC = Instance.new("UICorner")
         CopyBtn.Size = UDim2.new(0, 65, 0, 24) CopyBtn.Position = UDim2.new(1, -75, 0.5, -12) CopyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40) CopyBtn.Font = Enum.Font.GothamBold CopyBtn.Text = "نسخ 📋" CopyBtn.TextColor3 = Color3.fromRGB(255, 255, 255) CopyBtn.TextSize = 10 CopyBtn.Parent = ItemFrame CBC.CornerRadius = UDim.new(0, 4) CBC.Parent = CopyBtn
-
         CopyBtn.MouseButton1Click:Connect(function()
             setclipboard(song.Code) AudioInput.Text = song.Code CopyBtn.Text = "تم! ✔" CopyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
-            task.spawn(function() CreateNotification("تم نسخ الكود للحافظة: " .. song.Code) end) task.wait(1.2)
-            CopyBtn.Text = "نسخ 📋" CopyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+            CreateNotification("تم نسخ كود الميوزك: " .. song.Code) task.wait(1) CopyBtn.Text = "نسخ 📋" CopyBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
         end)
     end
-    task.wait() MusicScroll.CanvasSize = UDim2.new(0, 0, 0, MusicListLayout.AbsoluteContentSize.Y + 5)
+    MusicScroll.CanvasSize = UDim2.new(0, 0, 0, MusicListLayout.AbsoluteContentSize.Y + 5)
 
     ---------------------------------------------------------
-    -- [3. محتويات صفحة سكنات أولاد 1 و 2 بتوزيع مريح وكامل]
+    -- [3. محتويات صفحة السكنات للأولاد]
     ---------------------------------------------------------
-    local SkinsContainer = Instance.new("Frame")
-    SkinsContainer.Size = UDim2.new(1, 0, 1, 0) SkinsContainer.BackgroundTransparency = 1 SkinsContainer.Parent = SkinsPage
-
+    local SkinsContainer = Instance.new("Frame") SkinsContainer.Size = UDim2.new(1, 0, 1, 0) SkinsContainer.BackgroundTransparency = 1 SkinsContainer.Parent = SkinsPage
     local BoysPanel = Instance.new("Frame") local BPCorner = Instance.new("UICorner")
     BoysPanel.Size = UDim2.new(0.48, -4, 1, 0) BoysPanel.BackgroundColor3 = Color3.fromRGB(16, 20, 30) BoysPanel.Parent = SkinsContainer
     BPCorner.CornerRadius = UDim.new(0, 8) BPCorner.Parent = BoysPanel
@@ -300,9 +354,6 @@ local _S, _R = pcall(function()
     Boys2Scroll.Size = UDim2.new(1, -10, 1, -30) Boys2Scroll.Position = UDim2.new(0, 5, 0, 25) Boys2Scroll.BackgroundTransparency = 1 Boys2Scroll.ScrollBarThickness = 2 Boys2Scroll.ScrollBarImageColor3 = Color3.fromRGB(0, 255, 200) Boys2Scroll.Parent = Boys2Panel
     Boys2Layout.SortOrder = Enum.SortOrder.LayoutOrder Boys2Layout.Padding = UDim.new(0, 4) Boys2Layout.Parent = Boys2Scroll
 
-    ---------------------------------------------------------
-    -- [مربع كود السكن/يوزر فوق على اليمين]
-    ---------------------------------------------------------
     local CustomSkinPanel = Instance.new("Frame") local CSPCorner = Instance.new("UICorner") local CSPStroke = Instance.new("UIStroke")
     CustomSkinPanel.Size = UDim2.new(0.48, -4, 0, 70) CustomSkinPanel.Position = UDim2.new(0.52, 2, 0, 0) CustomSkinPanel.BackgroundColor3 = Color3.fromRGB(22, 22, 32) CustomSkinPanel.Parent = SkinsContainer
     CSPCorner.CornerRadius = UDim.new(0, 6) CSPCorner.Parent = CustomSkinPanel
@@ -322,38 +373,21 @@ local _S, _R = pcall(function()
             local fullCmd = ";char me " .. targetUser
             pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({fullCmd})) end)
             pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({fullCmd})) end)
-            CustomSkinBtn.Text = "تم الإرسال! 🔥" CustomSkinBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
-            CreateNotification("تم تطبيق السكن لـ: " .. targetUser)
-            task.wait(1.2)
-            CustomSkinBtn.Text = "تنفيذ السكن ⚡" CustomSkinBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
-        else
-            CreateNotification("الرجاء كتابة اسم أو كود المستخدم أولاً!")
+            CreateNotification("تم تطبيق السكن المخصص لـ: " .. targetUser)
         end
     end)
 
-    -- [قائمة يوزرات الأولاد 1]
     local BoySkinsData = {
-        {Label = "سكن Fikzyyx", User = "Fikzyyx"},
-        {Label = "سكن A1CKER", User = "A1CKER"},
-        {Label = "سكن ohorphic", User = "ohorphic"},
-        {Label = "سكن uiu", User = "uiu"},
-        {Label = "سكن 36", User = "36"},
-        {Label = "سكن nvm", User = "nvm"},
+        {Label = "سكن Fikzyyx", User = "Fikzyyx"}, {Label = "سكن A1CKER", User = "A1CKER"},
+        {Label = "سكن ohorphic", User = "ohorphic"}, {Label = "سكن uiu", User = "uiu"},
+        {Label = "سكن 36", User = "36"}, {Label = "سكن nvm", User = "nvm"},
         {Label = "سكن محمد الدون", User = "mohammeedd78"}
     }
-
-    -- [قائمة يوزرات الأولاد 2]
     local BoySkinsNewData = {
-        {Label = "سكن AINEENIAXX", User = "AINEENIAXX"},
-        {Label = "سكن GIFT_JW26", User = "GIFT_JW26"},
-        {Label = "سكن PAO_PAOPA", User = "PAO_PAOPA"},
-        {Label = "سكن CHOCOBALL_22", User = "CHOCOBALL_22"},
-        {Label = "سكن WEIQIANG79", User = "WEIQIANG79"},
-        {Label = "سكن 7iujs", User = "7iujs"},
-        {Label = "سكن 0ilw2", User = "0ilw2"},
-        {Label = "سكن 2RTX_I", User = "2RTX_I"},
-        {Label = "سكن 7ilix1i0", User = "7ilix1i0"},
-        {Label = "سكن 2xlli6", User = "2xlli6"}
+        {Label = "سكن 4liill77", User = "4liill77"}, {Label = "سكن dnsnff", User = "dnsnff"},
+        {Label = "سكن tllwp", User = "tllwp"}, {Label = "سكن tarknzal", User = "tarknzal"},
+        {Label = "سكن LH_7n", User = "LH_7n"}, {Label = "سكن thunder5p", User = "thunder5p"},
+        {Label = "سكن mes100244", User = "mes100244"}, {Label = "سكن 111ZeZoo111", User = "111ZeZoo111"}
     }
 
     local function PopulateSkins(scroll, layout, data, btnColor)
@@ -361,96 +395,215 @@ local _S, _R = pcall(function()
             local SFrame = Instance.new("Frame") local SFC = Instance.new("UICorner")
             SFrame.Size = UDim2.new(1, -4, 0, 32) SFrame.BackgroundColor3 = Color3.fromRGB(32, 32, 42) SFrame.Parent = scroll
             SFC.CornerRadius = UDim.new(0, 4) SFC.Parent = SFrame
-
             local SLabel = Instance.new("TextLabel") SLabel.Size = UDim2.new(0, 110, 1, 0) SLabel.Position = UDim2.new(0, 6, 0, 0) SLabel.BackgroundTransparency = 1 SLabel.Font = Enum.Font.GothamSemibold SLabel.Text = skin.Label SLabel.TextColor3 = Color3.fromRGB(235, 235, 245) SLabel.TextSize = 9 SLabel.TextXAlignment = Enum.TextXAlignment.Left SLabel.Parent = SFrame
             local SBtn = Instance.new("TextButton") local SBC = Instance.new("UICorner")
             SBtn.Size = UDim2.new(0, 55, 0, 22) SBtn.Position = UDim2.new(1, -60, 0.5, -11) SBtn.BackgroundColor3 = btnColor SBtn.Font = Enum.Font.GothamBold SBtn.Text = "تفعيل 👕" SBtn.TextColor3 = Color3.fromRGB(255, 255, 255) SBtn.TextSize = 8 SBtn.Parent = SFrame SBC.CornerRadius = UDim.new(0, 4) SBC.Parent = SBtn
-
             SBtn.MouseButton1Click:Connect(function()
                 local fullCmd = ";char me " .. skin.User
                 pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({fullCmd})) end)
                 pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({fullCmd})) end)
-                SBtn.Text = "تم! 🔥" SBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
-                CreateNotification("تم تنفيذ الأمر مباشرة: " .. fullCmd)
-                task.wait(1.2)
-                SBtn.Text = "تفعيل 👕" SBtn.BackgroundColor3 = btnColor
+                CreateNotification("تم تفعيل سكن: " .. skin.User)
             end)
         end
         scroll.CanvasSize = UDim2.new(0, 0, 0, layout.AbsoluteContentSize.Y + 5)
     end
-
     PopulateSkins(BoysScroll, BoysLayout, BoySkinsData, Color3.fromRGB(0, 120, 200))
     PopulateSkins(Boys2Scroll, Boys2Layout, BoySkinsNewData, Color3.fromRGB(0, 160, 150))
 
     ---------------------------------------------------------
-    -- [4. صفحة سحب شخص المستقلة الكاملة الفخمة]
+    -- [4. بناء صفحة نسخ سريع V2 💀 بالكامل]
     ---------------------------------------------------------
-    local PullPageContainer = Instance.new("Frame")
-    PullPageContainer.Size = UDim2.new(1, 0, 1, 0) PullPageContainer.BackgroundTransparency = 1 PullPageContainer.Parent = PullPlayerPage
+    local SelTable, Run, Mode, UseShortName = {}, false, "Hidden", true
+    local CRem, ARem = nil, nil
 
-    local FullPullPanel = Instance.new("Frame") local FPPCorner = Instance.new("UICorner")
-    FullPullPanel.Size = UDim2.new(1, 0, 1, 0) FullPullPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 28) FullPullPanel.Parent = PullPageContainer
-    FPPCorner.CornerRadius = UDim.new(0, 8) FPPCorner.Parent = FullPullPanel
-    local FullP_Stroke = Instance.new("UIStroke") FullP_Stroke.Color = RandomThemeColor FullP_Stroke.Thickness = 1.2 FullP_Stroke.Parent = FullPullPanel
+    local function ScanRemotes()
+        CRem = _EX.R:FindFirstChild("ChatEvent", true)
+        for _, d in pairs(_EX.R:GetDescendants()) do
+            if d:IsA("RemoteFunction") and (d.Name == "RequestCommandModification" or d.Name:match("Modification")) then
+                ARem = d break
+            end
+        end
+        if not ARem then ARem = _EX.R:FindFirstChild("RequestCommandModification", true) end
+    end
+    task.spawn(ScanRemotes)
 
-    local PTitle2 = Instance.new("TextLabel") PTitle2.Size = UDim2.new(1, 0, 0, 30) PTitle2.BackgroundTransparency = 1 PTitle2.Font = Enum.Font.GothamBold PTitle2.Text = "🎯 نظام سحب وتلبيوت اللاعبين المطور" PTitle2.TextColor3 = Color3.fromRGB(255, 215, 0) PTitle2.TextSize = 12 PTitle2.Parent = FullPullPanel
+    local V2LeftFrame = Instance.new("Frame")
+    V2LeftFrame.Size = UDim2.new(0, 230, 1, 0) V2LeftFrame.BackgroundTransparency = 1 V2LeftFrame.Parent = QuickCopyV2Page
 
-    local PullScroll = Instance.new("ScrollingFrame") local PullLayout = Instance.new("UIListLayout")
-    PullScroll.Size = UDim2.new(1, -20, 1, -85) PullScroll.Position = UDim2.new(0, 10, 0, 35) PullScroll.BackgroundTransparency = 1 PullScroll.ScrollBarThickness = 3 PullScroll.ScrollBarImageColor3 = RandomThemeColor PullScroll.Parent = FullPullPanel
-    PullLayout.SortOrder = Enum.SortOrder.LayoutOrder PullLayout.Padding = UDim.new(0, 5) PullLayout.Parent = PullScroll
+    -- قائمة التمرير للاعبين داخل الصفحة v2
+    local V2PList = Instance.new("ScrollingFrame") local V2ListLayout = Instance.new("UIListLayout")
+    V2PList.Size = UDim2.new(1, 0, 0, 100) V2PList.Position = UDim2.new(0, 0, 0, 5) V2PList.BackgroundColor3 = Color3.fromRGB(15, 10, 25) V2PList.BackgroundTransparency = 0.4 V2PList.ScrollBarThickness = 3 V2PList.Parent = V2LeftFrame
+    V2ListLayout.SortOrder = Enum.SortOrder.LayoutOrder V2ListLayout.Padding = UDim.new(0, 4) V2ListLayout.Parent = V2PList
+    Instance.new("UICorner", V2PList).CornerRadius = UDim.new(0, 8)
 
-    local PullButton = Instance.new("TextButton") local PBC = Instance.new("UICorner")
-    PullButton.Size = UDim2.new(1, -20, 0, 36) PullButton.Position = UDim2.new(0, 10, 1, -42) PullButton.BackgroundColor3 = RandomThemeColor PullButton.Font = Enum.Font.GothamBold PullButton.Text = "اختر لاعباً من الأعلى للسحب تلقائياً" PullButton.TextColor3 = Color3.fromRGB(255, 255, 255) PullButton.TextSize = 11 PullButton.Parent = FullPullPanel PBC.CornerRadius = UDim.new(0, 6) PBC.Parent = PullButton
+    -- صندوق البحث السريع بالاختصار الذكي
+    local V2SearchInp = Instance.new("TextBox") local V2SearchCorner = Instance.new("UICorner")
+    V2SearchInp.Size = UDim2.new(0, 160, 0, 28) V2SearchInp.Position = UDim2.new(0, 0, 0, 110) V2SearchInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) V2SearchInp.PlaceholderText = "🔍 اكتب أول حرفين..." V2SearchInp.Text = "" V2SearchInp.TextColor3 = Color3.fromRGB(220, 180, 255) V2SearchInp.Font = Enum.Font.GothamBold V2SearchInp.TextSize = 10 V2SearchInp.Parent = V2LeftFrame
+    V2SearchCorner.CornerRadius = UDim.new(0, 6) V2SearchCorner.Parent = V2SearchInp
 
-    local SelectedPullPlayer = ""
+    local ModeToggleBtn = Instance.new("TextButton") local MTCorner = Instance.new("UICorner")
+    ModeToggleBtn.Size = UDim2.new(0, 65, 0, 28) ModeToggleBtn.Position = UDim2.new(0, 165, 0, 110) ModeToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 60) ModeToggleBtn.Font = Enum.Font.GothamBold ModeToggleBtn.Text = "⚡ اختصار" ModeToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255) ModeToggleBtn.TextSize = 10 ModeToggleBtn.Parent = V2LeftFrame
+    MTCorner.CornerRadius = UDim.new(0, 6) MTCorner.Parent = ModeToggleBtn
 
-    local function UpdatePullList()
-        for _, child in ipairs(PullScroll:GetChildren()) do if child:IsA("Frame") then child:Destroy() end end
-        for _, player in ipairs(_EX.P:GetPlayers()) do
-            if player ~= _EX.L then
-                local Item = Instance.new("Frame") local IC = Instance.new("UICorner")
-                Item.Size = UDim2.new(1, -6, 0, 34) Item.BackgroundColor3 = Color3.fromRGB(30, 30, 40) Item.Parent = PullScroll
-                IC.CornerRadius = UDim.new(0, 5) IC.Parent = Item
+    ModeToggleBtn.MouseButton1Click:Connect(function()
+        UseShortName = not UseShortName
+        ModeToggleBtn.Text = UseShortName and "⚡ اختصار" or "👤 كامل"
+        ModeToggleBtn.BackgroundColor3 = UseShortName and Color3.fromRGB(0, 140, 60) or Color3.fromRGB(130, 0, 130)
+    end)
 
-                local Btn = Instance.new("TextButton")
-                Btn.Size = UDim2.new(1, 0, 1, 0) Btn.BackgroundTransparency = 1 Btn.Font = Enum.Font.GothamSemibold Btn.Text = "  " .. player.Name .. " (" .. player.DisplayName .. ")" Btn.TextColor3 = Color3.fromRGB(230, 230, 240) Btn.TextSize = 10 Btn.TextXAlignment = Enum.TextXAlignment.Left Btn.Parent = Item
+    -- صندوق الأوامر المخصصة اليدوية
+    local V2Inp = Instance.new("TextBox") local V2InpCorner = Instance.new("UICorner")
+    V2Inp.Size = UDim2.new(1, 0, 0, 32) V2Inp.Position = UDim2.new(0, 0, 0, 143) V2Inp.BackgroundColor3 = Color3.fromRGB(20, 15, 30) V2Inp.PlaceholderText = "اكتب أمر مخصص يدوي هنا..." V2Inp.Text = "" V2Inp.TextColor3 = Color3.fromRGB(210, 160, 255) V2Inp.Font = Enum.Font.GothamBold V2Inp.TextSize = 11 V2Inp.Parent = V2LeftFrame
+    V2InpCorner.CornerRadius = UDim.new(0, 6) V2InpCorner.Parent = V2Inp
 
-                Btn.MouseButton1Click:Connect(function()
-                    SelectedPullPlayer = player.Name
-                    PullButton.Text = "اضغط هنا لسحب: ;tp " .. player.Name
-                    CreateNotification("تم اختيار: " .. player.Name)
+    -- شبكة أزرار النسخ السريع الجاهزة
+    local QkFrame = Instance.new("Frame")
+    QkFrame.Size = UDim2.new(1, 0, 0, 75) QkFrame.Position = UDim2.new(0, 0, 0, 180) QkFrame.BackgroundTransparency = 1 QkFrame.Parent = V2LeftFrame
+    local V2Grid = Instance.new("UIGridLayout") V2Grid.CellSize = UDim2.new(0, 112, 0, 32) V2Grid.CellPadding = UDim2.new(0, 6, 0, 6) V2Grid.Parent = QkFrame
+
+    local function CreateQkBtn(text, cmds)
+        local btn = Instance.new("TextButton") local btnC = Instance.new("UICorner")
+        btn.Text = text btn.BackgroundColor3 = Color3.fromRGB(35, 15, 55) btn.TextColor3 = Color3.fromRGB(235, 220, 255) btn.Font = Enum.Font.GothamBold btn.TextSize = 10 btn.Parent = QkFrame btnC.CornerRadius = UDim.new(0, 6) btnC.Parent = btn
+        btn.MouseButton1Click:Connect(function() V2Inp.Text = cmds CreateNotification("تم تعيين نمط: " .. text) end)
+    end
+    CreateQkBtn("نسخ غامض", "/explode /logs /re /res /nv")
+    CreateQkBtn("نسخ هيد admin", "/explode /warp /re /res /nv")
+    CreateQkBtn("نسخ يعلق", "/logs /nv /re /res")
+    CreateQkBtn("نسخ تعذيب", "/dog /char miri /jc /tp /ice")
+
+    -- تبديل الأنماط بين النسخ المخفي والدردشة
+    local MdsFrame = Instance.new("Frame") MdsFrame.Size = UDim2.new(1, 0, 0, 32) MdsFrame.Position = UDim2.new(0, 0, 0, 260) MdsFrame.BackgroundTransparency = 1 MdsFrame.Parent = V2LeftFrame
+    local HidB = Instance.new("TextButton") local HB_C = Instance.new("UICorner")
+    HidB.Size = UDim2.new(0, 112, 1, 0) HidB.BackgroundColor3 = Color3.fromRGB(0, 140, 60) HidB.Font = Enum.Font.GothamBold HidB.Text = "نسخ مخفي [نشط]" HidB.TextColor3 = Color3.fromRGB(255, 255, 255) HidB.TextSize = 9 HidB.Parent = MdsFrame HB_C.CornerRadius = UDim.new(0, 6) HB_C.Parent = HidB
+
+    local ChtB = Instance.new("TextButton") local CB_C = Instance.new("UICorner")
+    ChtB.Size = UDim2.new(0, 112, 1, 0) ChtB.Position = UDim2.new(0, 118, 0, 0) ChtB.BackgroundColor3 = Color3.fromRGB(0, 90, 40) ChtB.Font = Enum.Font.GothamBold ChtB.Text = "نسخ شات" ChtB.TextColor3 = Color3.fromRGB(255, 255, 255) ChtB.TextSize = 9 ChtB.Parent = MdsFrame CB_C.CornerRadius = UDim.new(0, 6) CB_C.Parent = ChtB
+
+    HidB.MouseButton1Click:Connect(function() Mode = "Hidden" HidB.Text = "نسخ مخفي [نشط]" HidB.BackgroundColor3 = Color3.fromRGB(0, 140, 60) ChtB.Text = "نسخ شات" ChtB.BackgroundColor3 = Color3.fromRGB(0, 90, 40) end)
+    ChtB.MouseButton1Click:Connect(function() Mode = "Chat" ChtB.Text = "نسخ شات [نشط]" ChtB.BackgroundColor3 = Color3.fromRGB(0, 140, 60) HidB.Text = "نسخ مخفي" HidB.BackgroundColor3 = Color3.fromRGB(0, 90, 40) end)
+
+    -- التحكم والتشغيل والسرعة باليمين
+    local V2RightFrame = Instance.new("Frame") V2RightFrame.Size = UDim2.new(1, -240, 1, 0) V2RightFrame.Position = UDim2.new(0, 240, 0, 0) V2RightFrame.BackgroundTransparency = 1 V2RightFrame.Parent = QuickCopyV2Page
+
+    local StartBtn = Instance.new("TextButton") local SBC1 = Instance.new("UICorner")
+    StartBtn.Size = UDim2.new(1, 0, 0, 35) StartBtn.Position = UDim2.new(0, 0, 0, 10) StartBtn.BackgroundColor3 = Color3.fromRGB(80, 0, 160) StartBtn.Font = Enum.Font.GothamBold StartBtn.Text = "🚀 تفعيل التشغيل" StartBtn.TextColor3 = Color3.fromRGB(255, 255, 255) StartBtn.TextSize = 11 StartBtn.Parent = V2RightFrame SBC1.CornerRadius = UDim.new(0, 6) SBC1.Parent = StartBtn
+
+    local StopBtn = Instance.new("TextButton") local SBC2 = Instance.new("UICorner")
+    StopBtn.Size = UDim2.new(1, 0, 0, 35) StopBtn.Position = UDim2.new(0, 0, 0, 50) StopBtn.BackgroundColor3 = Color3.fromRGB(160, 20, 20) StopBtn.Font = Enum.Font.GothamBold StopBtn.Text = "🛑 إيقاف التشغيل" StopBtn.TextColor3 = Color3.fromRGB(255, 255, 255) StopBtn.TextSize = 11 StopBtn.Parent = V2RightFrame SBC2.CornerRadius = UDim.new(0, 6) SBC2.Parent = StopBtn
+
+    local SpeedLabel = Instance.new("TextLabel") SpeedLabel.Size = UDim2.new(1, 0, 0, 20) SpeedLabel.Position = UDim2.new(0, 0, 0, 95) SpeedLabel.BackgroundTransparency = 1 SpeedLabel.Font = Enum.Font.GothamBold SpeedLabel.Text = "⏱️ سرعة النسخ بالتأخير:" SpeedLabel.TextColor3 = Color3.fromRGB(190, 160, 255) SpeedLabel.TextSize = 10 SpeedLabel.Parent = V2RightFrame
+    local SpeedInp = Instance.new("TextBox") local SICorner = Instance.new("UICorner")
+    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.01" SpeedInp.TextColor3 = Color3.fromRGB(0, 255, 150) SpeedInp.Font = Enum.Font.GothamBold SpeedInp.TextSize = 12 SpeedInp.Parent = V2RightFrame SICorner.CornerRadius = UDim.new(0, 6) SICorner.Parent = SpeedInp
+
+    -- ربط وتحديث وظيفة قائمة سكرول نسخ سريع V2
+    local function UpV2PlayersList()
+        for _, child in ipairs(V2PList:GetChildren()) do if child:IsA("TextButton") then child:Destroy() end end
+        local st = V2SearchInp.Text:lower()
+        for _, p in pairs(_EX.P:GetPlayers()) do
+            if p ~= _EX.L and (st == "" or string.sub(p.Name:lower(), 1, #st) == st) then
+                local b = Instance.new("TextButton", V2PList)
+                b.Size = UDim2.new(1, 0, 0, 28) b.BackgroundColor3 = Color3.fromRGB(25, 15, 45) b.BackgroundTransparency = 0.4 b.Font = Enum.Font.Gotham b.TextSize = 10 b.TextColor3 = Color3.fromRGB(190, 130, 255) b.TextXAlignment = Enum.TextXAlignment.Left b.Text = "  🛸 " .. p.Name Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6)
+                if table.find(SelTable, p.Name) then b.BackgroundColor3 = Color3.fromRGB(120, 0, 255) end
+                b.MouseButton1Click:Connect(function()
+                    local idx = table.find(SelTable, p.Name)
+                    if idx then table.remove(SelTable, idx) b.BackgroundColor3 = Color3.fromRGB(25, 15, 45) else table.insert(SelTable, p.Name) b.BackgroundColor3 = Color3.fromRGB(120, 0, 255) end
                 end)
             end
         end
-        PullScroll.CanvasSize = UDim2.new(0, 0, 0, PullLayout.AbsoluteContentSize.Y + 5)
+        V2PList.CanvasSize = UDim2.new(0, 0, 0, V2ListLayout.AbsoluteContentSize.Y + 5)
     end
 
-    _EX.P.PlayerAdded:Connect(UpdatePullList) _EX.P.PlayerRemoving:Connect(function(p) if SelectedPullPlayer == p.Name then SelectedPullPlayer = "" PullButton.Text = "اختر لاعباً من الأعلى للسحب تلقائياً" end UpdatePullList() end) UpdatePullList()
+    V2SearchInp:GetPropertyChangedSignal("Text"):Connect(function()
+        UpV2PlayersList() local text = V2SearchInp.Text:lower()
+        if #text >= 2 then
+            for _, p in pairs(_EX.P:GetPlayers()) do
+                if p ~= _EX.L and string.sub(p.Name:lower(), 1, #text) == text and not table.find(SelTable, p.Name) then
+                    table.insert(SelTable, p.Name) UpV2PlayersList()
+                end
+            end
+        end
+    end)
+    _EX.P.PlayerAdded:Connect(UpV2PlayersList) _EX.P.PlayerRemoving:Connect(function(p) local idx = table.find(SelTable, p.Name) if idx then table.remove(SelTable, idx) end UpV2PlayersList() end) UpV2PlayersList()
 
-    PullButton.MouseButton1Click:Connect(function()
-        if SelectedPullPlayer ~= "" then
-            local fullCmd = ";tp " .. SelectedPullPlayer
-            pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({fullCmd})) end)
-            pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({fullCmd})) end)
-            CreateNotification("تم إرسال أمر السحب: " .. fullCmd)
+    -- آلية تشغيل حلقة التدمير للنسخ V2
+    StartBtn.MouseButton1Click:Connect(function()
+        if #SelTable == 0 or V2Inp.Text == "" then CreateNotification("اختر هدفاً واكتب أمراً!") return end
+        if Run then return end Run = true
+        StartBtn.BackgroundColor3 = Color3.fromRGB(130, 0, 255) StartBtn.Text = "⚡ جاري التدمير نشط ⚡"
+        if not ARem then ScanRemotes() end
+        task.spawn(function()
+            while Run do
+                local customSpeed = tonumber(SpeedInp.Text) or 0.01
+                local pat = ""
+                for _, target in pairs(SelTable) do
+                    local targetName = (UseShortName and V2SearchInp.Text ~= "" and #V2SearchInp.Text >= 2) and V2SearchInp.Text:lower() or target:lower()
+                    for c in V2Inp.Text:gmatch("%S+") do
+                        local prefix = (string.sub(c, 1, 1) == "/" and "" or "/")
+                        pat = pat .. prefix .. c .. " " .. targetName .. " "
+                    end
+                end
+                local finalPat = string.rep(pat, 60)
+                pcall(function()
+                    if Mode == "Hidden" and ARem then ARem:InvokeServer(finalPat)
+                    elseif Mode == "Chat" then if CRem then CRem:FireServer(finalPat, "All") end if ARem then ARem:InvokeServer(finalPat) end end
+                end)
+                task.wait(customSpeed)
+            end
+        end)
+    end)
+    StopBtn.MouseButton1Click:Connect(function() Run = false StartBtn.BackgroundColor3 = Color3.fromRGB(80, 0, 160) StartBtn.Text = "🚀 تفعيل التشغيل" end)
+
+    ---------------------------------------------------------
+    -- [5. بناء صفحة اخرى 📀 وتضمين مانع التقطيع الأقوى]
+    ---------------------------------------------------------
+    local OtherContainer = Instance.new("Frame")
+    OtherContainer.Size = UDim2.new(1, 0, 1, 0) OtherContainer.BackgroundTransparency = 1 OtherContainer.Parent = OtherPage
+
+    local FPSBtn = Instance.new("TextButton") local FPSCorner = Instance.new("UICorner") local FPSStroke = Instance.new("UIStroke")
+    FPSBtn.Size = UDim2.new(0, 320, 0, 45) FPSBtn.Position = UDim2.new(0.5, -160, 0, 20) FPSBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45) FPSBtn.Font = Enum.Font.GothamBold FPSBtn.Text = "🚀 مانع التقطيع الأقوى [معطل]" FPSBtn.TextColor3 = Color3.fromRGB(235, 220, 255) FPSBtn.TextSize = 12 FPSBtn.Parent = OtherContainer
+    FPSCorner.CornerRadius = UDim.new(0, 8) FPSCorner.Parent = FPSBtn
+    FPSStroke.Color = Color3.fromRGB(100, 100, 100) FPSStroke.Thickness = 1.2 FPSStroke.Parent = FPSBtn
+
+    local OtherInfoLabel = Instance.new("TextLabel")
+    OtherInfoLabel.Size = UDim2.new(1, 0, 0, 60) OtherInfoLabel.Position = UDim2.new(0, 0, 0, 75) OtherInfoLabel.BackgroundTransparency = 1 OtherInfoLabel.Font = Enum.Font.GothamSemibold
+    OtherInfoLabel.Text = "عند تفعيل خيار مانع التقطيع الأقوى، سيتم حذف المؤثرات البصرية الزائدة والجسيمات (Particles/Explosions) وتعديل خامات الماب بالكامل لتسريع الفريمات وتقليل الفريز فوراً وبأعلى حماية وسرعة ممكنة لتجنب الكراش." OtherInfoLabel.TextColor3 = Color3.fromRGB(150, 150, 160) OtherInfoLabel.TextSize = 10 OtherInfoLabel.TextWrapped = true OtherInfoLabel.Parent = OtherContainer
+
+    local FPSActive, FastClearConnection = false, nil
+    FPSBtn.MouseButton1Click:Connect(function()
+        FPSActive = not FPSActive
+        if FPSActive then
+            FPSBtn.Text = "🚀 مانع التقطيع الأقوى [مفعل]" FPSBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 60) FPSStroke.Color = Color3.fromRGB(0, 255, 120)
+            CreateNotification("تم تفعيل مانع التقطيع وحذف المؤثرات!")
+            pcall(function()
+                for _, v in pairs(workspace:GetDescendants()) do
+                    if v:IsA("ParticleEmitter") or v:IsA("Explosion") or v:IsA("Sparkles") or v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Decal") or v:IsA("Texture") then
+                        v:Destroy()
+                    elseif (v:IsA("MeshPart") or v:IsA("Part")) and not v:IsDescendantOf(workspace.CurrentCamera) then
+                        v.Material = Enum.Material.SmoothPlastic v.Reflectance = 0
+                    end
+                end
+            end)
+            FastClearConnection = workspace.DescendantAdded:Connect(function(d)
+                if FPSActive and (d:IsA("ParticleEmitter") or d:IsA("Explosion") or d:IsA("Sparkles") or d:IsA("Fire")) then
+                    task.defer(function() pcall(function() d:Destroy() end) end)
+                end
+            end)
         else
-            CreateNotification("الرجاء اختيار لاعب من القائمة أولاً!")
+            FPSBtn.Text = "🚀 مانع التقطيع الأقوى [معطل]" FPSBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45) FPSStroke.Color = Color3.fromRGB(100, 100, 100)
+            if FastClearConnection then FastClearConnection:Disconnect() FastClearConnection = nil end
+            CreateNotification("تم إلغاء تفعيل مانع التقطيع.")
         end
     end)
 
     ---------------------------------------------------------
-    -- المحركات الخلفية وحلقات الأوامر والدردشة
+    -- المحركات الخلفية وحلقات الأوامر القديمة للـ Hub الرئيسي
     ---------------------------------------------------------
     local IsSpamming = false
-    -- [تم دمج الأوامر القديمة والجديدة معاً بالكامل]
     local CustomCommands = {";re", ";logs", ";nv", ";kill", ";res", ";clogs", ";ice"}
     
     local function ProcessCommands(tn)
-        if tn == "" then tn = _EX.L.Name end
-        local t = {} 
-        for _, c in ipairs(CustomCommands) do 
-            table.insert(t, c .. " " .. tn) 
-        end 
+        if tn == "" then tn = _EX.L.Name end local t = {} 
+        for _, c in ipairs(CustomCommands) do table.insert(t, c .. " " .. tn) end 
         return table.concat(t, " ")
     end
 
@@ -471,35 +624,12 @@ local _S, _R = pcall(function()
         end
     end)
 
-    local function ConvertToRainbowRichText(text)
-        local totalChars = #text local result = ""
-        local hexColors = {"#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"}
-        for i = 1, totalChars do
-            local char = text:sub(i, i) local colorIndex = ((i - 1) % #hexColors) + 1 local color = hexColors[colorIndex]
-            if char == " " then result = result .. " " else result = result .. "<font color='" .. color .. "'>" .. char .. "</font>" end
-        end
-        return result
-    end
-
-    RainbowInput.FocusLost:Connect(function(enterPressed)
-        local baseText = RainbowInput.Text if baseText == "" then return end
-        local rainbowRichText = ConvertToRainbowRichText(baseText)
-        pcall(function()
-            local chatService = game:GetService("TextChatService")
-            if chatService and chatService.ChatVersion == Enum.ChatVersion.TextChatService then
-                local channel = chatService.TextChannels:FindFirstChild("RBXGeneral") if channel then channel:SendAsync(rainbowRichText) end
-            else
-                _EX.R.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(rainbowRichText, "All")
-            end
-        end)
-    end)
-
     Container.Visible = true
     _EX.T:Create(Container, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = FullSize, Position = FullPos}):Play()
 
     local TB = Instance.new("TextButton") local TC = Instance.new("UICorner") local TS = Instance.new("UIStroke")
-    TB.Name = "OpenStationButton" TB.Size = UDim2.new(0, 40, 0, 40) TB.Position = UDim2.new(1, -55, 1, -55)
-    TB.BackgroundColor3 = Color3.fromRGB(10, 10, 15) TB.Font = Enum.Font.GothamBold TB.Text = "🕷" TB.TextColor3 = RandomThemeColor TB.TextSize = 16 TB.ZIndex = 10 TB.Parent = MainGui
+    TB.Name = "OpenStationButton" TB.Size = UDim2.new(0, 42, 0, 42) TB.Position = UDim2.new(1, -55, 1, -55)
+    TB.BackgroundColor3 = Color3.fromRGB(10, 10, 15) TB.Font = Enum.Font.GothamBold TB.Text = "🔮" TB.TextColor3 = RandomThemeColor TB.TextSize = 16 TB.ZIndex = 10 TB.Parent = MainGui
     TC.CornerRadius = UDim.new(1, 0) TC.Parent = TB TS.Color = RandomThemeColor TS.Thickness = 1.5 TS.Parent = TB
     MakeDraggable(TB)
 
