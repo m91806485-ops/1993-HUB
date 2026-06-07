@@ -240,10 +240,21 @@ local _S, _R = pcall(function()
     local RGBRun = false
     ColoredNameToggleBtn.MouseButton1Click:Connect(function()
         if RGBRun then
-            RGBRun = false ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80)
-            CreateNotification("تم إيقاف الاسم الملون")
+            RGBRun = false 
+            ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" 
+            ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80)
+            CreateNotification("تم إيقاف الاسم الملون وإزالته")
+            
+            pcall(function()
+                local r = _EX.R:FindFirstChild("ApplyTitle", true) or _EX.R:FindFirstChild("ChangeTitle", true)
+                if r then 
+                    r:FireServer("", Color3.fromRGB(255, 255, 255)) 
+                end
+            end)
         else
-            RGBRun = true ColoredNameToggleBtn.Text = "🛑 إلغاء تفعيل الاسم" ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(150, 20, 20)
+            RGBRun = true 
+            ColoredNameToggleBtn.Text = "🛑 إلغاء تفعيل الاسم" 
+            ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(150, 20, 20)
             CreateNotification("تم تنشيط الاسم الملون المتغير تلقائياً!")
             task.spawn(function()
                 local hu = 0
@@ -257,7 +268,8 @@ local _S, _R = pcall(function()
     end)
 
     local IsSpamming = false
-    local CustomCommands = {";re", ";logs", ";nv", ";kill", ";res", ";clogs", ";ice"}
+    -- [تم التعديل] الأوامر الجديدة المطلوبة هنا
+    local CustomCommands = {";re", ";res", ";clogs", ";logs", ";nv", ";nv", ";fire"}
     
     local function ProcessCommands(tn)
         if tn == "" then tn = _EX.L.Name end local t = {} 
@@ -274,6 +286,7 @@ local _S, _R = pcall(function()
                     local payload = ProcessCommands(NameInputV1.Text)
                     pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({payload})) end)
                     pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({payload})) end)
+                    -- [تم التعديل] تعديل السرعة إلى 0.1 ثانية
                     task.wait(0.1)
                 end
             end)
@@ -422,7 +435,7 @@ local _S, _R = pcall(function()
 
     local SpeedLabel = Instance.new("TextLabel") SpeedLabel.Size = UDim2.new(1, 0, 0, 20) SpeedLabel.Position = UDim2.new(0, 0, 0, 95) SpeedLabel.BackgroundTransparency = 1 SpeedLabel.Font = Enum.Font.GothamBold SpeedLabel.Text = "⏱️ سرعة النسخ بالتأخير:" SpeedLabel.TextColor3 = Color3.fromRGB(190, 160, 255) SpeedLabel.TextSize = 10 SpeedLabel.Parent = V2RightFrame
     local SpeedInp = Instance.new("TextBox") local SICorner = Instance.new("UICorner")
-    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.01" SpeedInp.TextColor3 = Color3.fromRGB(0, 255, 150) SpeedInp.Font = Enum.Font.GothamBold SpeedInp.TextSize = 12 SpeedInp.Parent = V2RightFrame SICorner.CornerRadius = UDim.new(0, 6) SICorner.Parent = SpeedInp
+    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.1" SpeedInp.TextColor3 = Color3.fromRGB(0, 255, 150) SpeedInp.Font = Enum.Font.GothamBold SpeedInp.TextSize = 12 SpeedInp.Parent = V2RightFrame SICorner.CornerRadius = UDim.new(0, 6) SICorner.Parent = SpeedInp
 
     local function UpV2PlayersList()
         for _, child in ipairs(V2PList:GetChildren()) do if child:IsA("TextButton") then child:Destroy() end end
@@ -460,7 +473,8 @@ local _S, _R = pcall(function()
         if not ARem then ScanRemotes() end
         task.spawn(function()
             while Run do
-                local customSpeed = tonumber(SpeedInp.Text) or 0.01
+                -- [تم التعديل] السرعة الافتراضية المأخوذة من الـ Input تصبح 0.1
+                local customSpeed = tonumber(SpeedInp.Text) or 0.1
                 local pat = ""
                 for _, target in pairs(SelTable) do
                     local targetName = (UseShortName and V2SearchInp.Text ~= "" and #V2SearchInp.Text >= 2) and V2SearchInp.Text:lower() or target:lower()
@@ -516,7 +530,7 @@ local _S, _R = pcall(function()
     MusicScroll.CanvasSize = UDim2.new(0, 0, 0, MusicListLayout.AbsoluteContentSize.Y + 5)
 
     ---------------------------------------------------------
-    -- [5. صفحة اسكنات الاولاد - تعديل الإرسال التلقائي للشات والمود]
+    -- [5. صفحة اسكنات الاولاد]
     ---------------------------------------------------------
     local BoysScroll = Instance.new("ScrollingFrame") local BoysListLayout = Instance.new("UIListLayout")
     BoysScroll.Size = UDim2.new(1, 0, 1, 0) BoysScroll.BackgroundTransparency = 1 BoysScroll.ScrollBarThickness = 3 BoysScroll.ScrollBarImageColor3 = RandomThemeColor BoysScroll.Parent = BoysSkinsPage
@@ -541,7 +555,6 @@ local _S, _R = pcall(function()
         UseSkinBtn.MouseButton1Click:Connect(function()
             local charCommand = ";char me " .. boyName
             
-            -- تنفيذ الأمر وإرساله مباشرة دون نسخ
             pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({charCommand})) end)
             pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({charCommand})) end)
             
