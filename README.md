@@ -1,41 +1,15 @@
 --[[
-    1993 HUB v25.0 [Updated Music List & Numerical Naming]
-    [+] Reordered Sidebar tabs precisely to user's preference.
-    [+] Updated all tab emojis (🎗, 🎯, 🎭, 🎧, 🎲).
-    [+] Added 5 new tracks and reformatted all songs to numeric names.
+    1993 HUB v26.1 [Direct Commands Execution Update]
+    [+] Modified Boys Skins List: Removed clipboard functionality, replaced with direct Execution inside the chat (;char me username).
+    [+] Kept Live Dynamic Updating Player List in Copy V1 Page.
     [👑] Modified & Maintained by: mohammeedd78
 --]]
 
-local _OPI_DATA = "WkdGellYUnZjRndnS21sdmRYTmxjblpwWTJWbGNnbHlaV0ZrYVdkbGJsd3BZM0psWVhScFpYTWdLR1Z1ZDJsdmJuTXZJU0U3Q205d2FYUnVJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJSDA3Q21sdmRYTmxjblpwWTJWbGNnbHlaV0ZrYVdkbGJsd3BZM0psWVhScFpYTWdLR1Z1ZDJsdmJuTXZJU0U3Q205d2FYUnVJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJR0Z3Y21Gd2NtdGxiV0Z1ZEdWeWN3b2dJSDA3"
-local _OPI_KEY = 0xFF44CC
-
-local function _OPI_DEC(s)
-    local b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-    s = string.gsub(s, '[^'..b..'=]', '')
-    return (s:gsub('.', function(x)
-        if (x == '=') then return '' end
-        local r, f = '', (b:find(x) - 1)
-        for i = 6, 1, -1 do r = r .. (f % 2^i - f % 2^(i-1) > 0 and '1' or '0') end
-        return r;
-    end):gsub('%d%d%d%d%d%d%d%d', function(x)
-        local r = 0
-        for i = 1, 8 do r = r + (x:sub(i, i) == '1' and 2^(8-i) or 0) end
-        return string.char(r);
-    end))
-end
-
-local function _OPI_XOR(d, k)
-    local o = {}
-    for i = 1, #d do
-        local b = string.byte(d, i)
-        o[i] = string.char(bit32 and bit32.bxor(b, k % 256) or b)
-    end
-    return table.concat(o)
-end
-
 local _ENV_BOX = getfenv and getfenv() or _ENV
 local _S, _R = pcall(function()
-    local decrypted = _OPI_XOR(_OPI_DEC(_OPI_DATA), _OPI_KEY)
+    
+    print("1993 HUB v26.1 Loaded Successfully!")
+    print("Welcome, Script Developer!")
     
     local _EX = {
         P = game:GetService("Players"),
@@ -59,7 +33,7 @@ local _S, _R = pcall(function()
     local RandomThemeColor = PremiumColors[math.random(1, #PremiumColors)]
 
     local MainGui = Instance.new("ScreenGui")
-    MainGui.Name = "1993_Hub_V25"
+    MainGui.Name = "1993_Hub_V26"
     MainGui.ResetOnSpawn = false
     MainGui.Parent = _EX.G
 
@@ -184,11 +158,11 @@ local _S, _R = pcall(function()
         return Page
     end
 
-    -- [ترتيب الـ Sidebar الثابت والإيموجيات بدقة]
     local CopyV1Page = CreateTab("نسخ V1", "🎗")
     local PullPlayerPage = CreateTab("سحب شخص", "🎯")
     local QuickCopyV2Page = CreateTab("نسخ سريع V2", "🎭")
     local MusicPage = CreateTab("الاغاني", "🎧")
+    local BoysSkinsPage = CreateTab("اسكنات الاولاد", "🎗") 
     local OtherPage = CreateTab("اخرى", "🎲")
 
     Pages["نسخ V1"].Visible = true
@@ -197,21 +171,24 @@ local _S, _R = pcall(function()
     TabScrollContainer.CanvasSize = UDim2.new(0, 0, 0, TabScrollLayout.AbsoluteContentSize.Y + 10)
 
     ---------------------------------------------------------
-    -- [1. صفحة نسخ V1]
+    -- [1. صفحة نسخ V1 - قائمة اللاعبين التفاعلية بالجهة اليمنى]
     ---------------------------------------------------------
     local CopyV1Container = Instance.new("Frame")
     CopyV1Container.Size = UDim2.new(1, 0, 1, 0) CopyV1Container.BackgroundTransparency = 1 CopyV1Container.Parent = CopyV1Page
 
+    local LeftControlsV1 = Instance.new("Frame")
+    LeftControlsV1.Size = UDim2.new(0, 210, 1, 0) LeftControlsV1.BackgroundTransparency = 1 LeftControlsV1.Parent = CopyV1Container
+
     local NameInputV1 = Instance.new("TextBox") local NICV1 = Instance.new("UICorner")
-    NameInputV1.Size = UDim2.new(0, 220, 0, 32) NameInputV1.Position = UDim2.new(0, 5, 0, 5)
-    NameInputV1.BackgroundColor3 = Color3.fromRGB(22, 22, 30) NameInputV1.Font = Enum.Font.Gotham NameInputV1.PlaceholderText = "اسم اللاعب المستهدف بالحلقة..." NameInputV1.Text = "" NameInputV1.TextColor3 = Color3.fromRGB(255, 255, 255) NameInputV1.TextSize = 11 NameInputV1.Parent = CopyV1Container NICV1.CornerRadius = UDim.new(0, 6) NICV1.Parent = NameInputV1
+    NameInputV1.Size = UDim2.new(1, 0, 0, 32) NameInputV1.Position = UDim2.new(0, 0, 0, 5)
+    NameInputV1.BackgroundColor3 = Color3.fromRGB(22, 22, 30) NameInputV1.Font = Enum.Font.Gotham NameInputV1.PlaceholderText = "اسم اللاعب المستهدف بالحلقة..." NameInputV1.Text = "" NameInputV1.TextColor3 = Color3.fromRGB(255, 255, 255) NameInputV1.TextSize = 11 NameInputV1.Parent = LeftControlsV1 NICV1.CornerRadius = UDim.new(0, 6) NICV1.Parent = NameInputV1
 
     local ActionButtonV1 = Instance.new("TextButton") local BCV1 = Instance.new("UICorner")
-    ActionButtonV1.Size = UDim2.new(0, 220, 0, 35) ActionButtonV1.Position = UDim2.new(0, 5, 0, 45)
-    ActionButtonV1.BackgroundColor3 = RandomThemeColor ActionButtonV1.Font = Enum.Font.GothamBold ActionButtonV1.Text = "تفعيل حلقة الأوامر الإدارية" ActionButtonV1.TextColor3 = Color3.fromRGB(255, 255, 255) ActionButtonV1.TextSize = 11 ActionButtonV1.Parent = CopyV1Container BCV1.CornerRadius = UDim.new(0, 6) BCV1.Parent = ActionButtonV1
+    ActionButtonV1.Size = UDim2.new(1, 0, 0, 35) ActionButtonV1.Position = UDim2.new(0, 0, 0, 45)
+    ActionButtonV1.BackgroundColor3 = RandomThemeColor ActionButtonV1.Font = Enum.Font.GothamBold ActionButtonV1.Text = "تفعيل حلقة الأوامر الإدارية" ActionButtonV1.TextColor3 = Color3.fromRGB(255, 255, 255) ActionButtonV1.TextSize = 11 ActionButtonV1.Parent = LeftControlsV1 BCV1.CornerRadius = UDim.new(0, 6) BCV1.Parent = ActionButtonV1
 
     local ColoredNamePanel = Instance.new("Frame") local CNCorner = Instance.new("UICorner") local CNStroke = Instance.new("UIStroke")
-    ColoredNamePanel.Size = UDim2.new(0, 220, 0, 80) ColoredNamePanel.Position = UDim2.new(0, 5, 0, 90) ColoredNamePanel.BackgroundColor3 = Color3.fromRGB(20, 15, 30) ColoredNamePanel.Parent = CopyV1Container
+    ColoredNamePanel.Size = UDim2.new(1, 0, 0, 80) ColoredNamePanel.Position = UDim2.new(0, 0, 0, 90) ColoredNamePanel.BackgroundColor3 = Color3.fromRGB(20, 15, 30) ColoredNamePanel.Parent = LeftControlsV1
     CNCorner.CornerRadius = UDim.new(0, 6) CNCorner.Parent = ColoredNamePanel
     CNStroke.Color = Color3.fromRGB(150, 0, 255) CNStroke.Thickness = 1 CNStroke.Parent = ColoredNamePanel
 
@@ -223,6 +200,42 @@ local _S, _R = pcall(function()
     local ColoredNameToggleBtn = Instance.new("TextButton") local CNBCorner = Instance.new("UICorner")
     ColoredNameToggleBtn.Size = UDim2.new(1, -12, 0, 30) ColoredNameToggleBtn.Position = UDim2.new(0, 6, 0, 42) ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80) ColoredNameToggleBtn.Font = Enum.Font.GothamBold ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" ColoredNameToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255) ColoredNameToggleBtn.TextSize = 11 ColoredNameToggleBtn.Parent = ColoredNamePanel
     CNBCorner.CornerRadius = UDim.new(0, 4) CNBCorner.Parent = ColoredNameToggleBtn
+
+    local RightPanelV1 = Instance.new("Frame")
+    RightPanelV1.Size = UDim2.new(1, -220, 1, 0) RightPanelV1.Position = UDim2.new(0, 220, 0, 0) RightPanelV1.BackgroundColor3 = Color3.fromRGB(18, 18, 26) RightPanelV1.Parent = CopyV1Container
+    local RPCCV1 = Instance.new("UICorner") RPCCV1.CornerRadius = UDim.new(0, 8) RPCCV1.Parent = RightPanelV1
+    local RPSSV1 = Instance.new("UIStroke") RPSSV1.Color = Color3.fromRGB(40, 40, 50) RPSSV1.Thickness = 1 RPSSV1.Parent = RightPanelV1
+
+    local V1ListTitle = Instance.new("TextLabel") V1ListTitle.Size = UDim2.new(1, 0, 0, 25) V1ListTitle.BackgroundTransparency = 1 V1ListTitle.Font = Enum.Font.GothamBold V1ListTitle.Text = "👥 قايمه اللاعبين" V1ListTitle.TextColor3 = Color3.fromRGB(255, 255, 255) V1ListTitle.TextSize = 10 V1ListTitle.Parent = RightPanelV1
+
+    local V1Scroll = Instance.new("ScrollingFrame") local V1ListLayout = Instance.new("UIListLayout")
+    V1Scroll.Size = UDim2.new(1, -8, 1, -35) V1Scroll.Position = UDim2.new(0, 4, 0, 28) V1Scroll.BackgroundTransparency = 1 V1Scroll.ScrollBarThickness = 3 V1Scroll.ScrollBarImageColor3 = RandomThemeColor V1Scroll.Parent = RightPanelV1
+    V1ListLayout.SortOrder = Enum.SortOrder.LayoutOrder V1ListLayout.Padding = UDim.new(0, 4) V1ListLayout.Parent = V1Scroll
+
+    local function RefreshV1PlayerList()
+        for _, child in ipairs(V1Scroll:GetChildren()) do if child:IsA("Frame") then child:Destroy() end end
+        for _, player in ipairs(_EX.P:GetPlayers()) do
+            if player ~= _EX.L then
+                local PF = Instance.new("Frame") local PFC = Instance.new("UICorner")
+                PF.Name = player.Name PF.Size = UDim2.new(1, -6, 0, 30) PF.BackgroundColor3 = Color3.fromRGB(28, 28, 40) PF.Parent = V1Scroll
+                PFC.CornerRadius = UDim.new(0, 5) PFC.Parent = PF
+                local PN = Instance.new("TextButton") PN.Size = UDim2.new(1, -8, 1, 0) PN.Position = UDim2.new(0, 6, 0, 0) PN.BackgroundTransparency = 1 PN.Font = Enum.Font.GothamSemibold PN.Text = "👤 " .. player.Name PN.TextColor3 = Color3.fromRGB(220, 220, 230) PN.TextSize = 10 PN.TextXAlignment = Enum.TextXAlignment.Left PN.Parent = PF
+                PN.MouseButton1Click:Connect(function()
+                    NameInputV1.Text = player.Name
+                    CreateNotification("تم اختيار المستهدف لنسخ V1: " .. player.Name)
+                end)
+            end
+        end
+        V1Scroll.CanvasSize = UDim2.new(0, 0, 0, V1ListLayout.AbsoluteContentSize.Y + 5)
+    end
+
+    _EX.P.PlayerAdded:Connect(RefreshV1PlayerList)
+    _EX.P.PlayerRemoving:Connect(function(player)
+        local existing = V1Scroll:FindFirstChild(player.Name)
+        if existing then existing:Destroy() end
+        V1Scroll.CanvasSize = UDim2.new(0, 0, 0, V1ListLayout.AbsoluteContentSize.Y + 5)
+    end)
+    RefreshV1PlayerList()
 
     local RGBRun = false
     ColoredNameToggleBtn.MouseButton1Click:Connect(function()
@@ -291,7 +304,7 @@ local _S, _R = pcall(function()
     local RPCC = Instance.new("UICorner") RPCC.CornerRadius = UDim.new(0, 8) RPCC.Parent = RightPullPanel
     local RPSS = Instance.new("UIStroke") RPSS.Color = Color3.fromRGB(40, 40, 50) RPSS.Thickness = 1 RPSS.Parent = RightPullPanel
 
-    local PTit = Instance.new("TextLabel") PTit.Size = UDim2.new(1, 0, 0, 25) PTit.BackgroundTransparency = 1 PTit.Font = Enum.Font.GothamBold PTit.Text = "👥 اختر لاعباً من السيرفر للسحب فوراً" PTit.TextColor3 = Color3.fromRGB(255, 255, 255) PTit.TextSize = 10 PTit.Parent = RightPullPanel
+    local PTit = Instance.new("TextLabel") PTit.Size = UDim2.new(1, 0, 0, 25) PTit.BackgroundTransparency = 1 PTit.Font = Enum.Font.GothamBold PTit.Text = "👥 قائمة اللاعبين الحالية بالسيرفر" PTit.TextColor3 = Color3.fromRGB(255, 255, 255) PTit.TextSize = 10 PTit.Parent = RightPullPanel
 
     local PScroll = Instance.new("ScrollingFrame") local PListLayout = Instance.new("UIListLayout")
     PScroll.Size = UDim2.new(1, -8, 1, -35) PScroll.Position = UDim2.new(0, 4, 0, 28) PScroll.BackgroundTransparency = 1 PScroll.ScrollBarThickness = 3 PScroll.ScrollBarImageColor3 = RandomThemeColor PScroll.Parent = RightPullPanel
@@ -302,6 +315,7 @@ local _S, _R = pcall(function()
         for _, player in ipairs(_EX.P:GetPlayers()) do
             if player ~= _EX.L then
                 local PF = Instance.new("Frame") local PFC = Instance.new("UICorner")
+                PF.Name = player.Name
                 PF.Size = UDim2.new(1, -6, 0, 30) PF.BackgroundColor3 = Color3.fromRGB(28, 28, 40) PF.Parent = PScroll
                 PFC.CornerRadius = UDim.new(0, 5) PFC.Parent = PF
                 local PN = Instance.new("TextButton") PN.Size = UDim2.new(1, -8, 1, 0) PN.Position = UDim2.new(0, 6, 0, 0) PN.BackgroundTransparency = 1 PN.Font = Enum.Font.GothamSemibold PN.Text = "🎯 " .. player.Name PN.TextColor3 = Color3.fromRGB(220, 220, 230) PN.TextSize = 10 PN.TextXAlignment = Enum.TextXAlignment.Left PN.Parent = PF
@@ -314,7 +328,10 @@ local _S, _R = pcall(function()
         end
         PScroll.CanvasSize = UDim2.new(0, 0, 0, PListLayout.AbsoluteContentSize.Y + 5)
     end
-    _EX.P.PlayerAdded:Connect(RefreshPullList) _EX.P.PlayerRemoving:Connect(RefreshPullList) RefreshPullList()
+
+    _EX.P.PlayerAdded:Connect(function(player) RefreshPullList() CreateNotification("📥 دخل السيرفر: " .. player.Name) end)
+    _EX.P.PlayerRemoving:Connect(function(player) local existingFrame = PScroll:FindFirstChild(player.Name) if existingFrame then existingFrame:Destroy() end PScroll.CanvasSize = UDim2.new(0, 0, 0, PListLayout.AbsoluteContentSize.Y + 5) CreateNotification("📤 غادر السيرفر: " .. player.Name) end)
+    RefreshPullList()
 
     ActionPullButton.MouseButton1Click:Connect(function()
         local target = TargetNameInput.Text
@@ -464,13 +481,12 @@ local _S, _R = pcall(function()
     StopBtn.MouseButton1Click:Connect(function() Run = false StartBtn.BackgroundColor3 = Color3.fromRGB(80, 0, 160) StartBtn.Text = "🚀 تفعيل التشغيل" end)
 
     ---------------------------------------------------------
-    -- [4. مكتبة الأغاني المحدثة والموحدة بالأرقام]
+    -- [4. مكتبة الأغاني]
     ---------------------------------------------------------
     local MusicScroll = Instance.new("ScrollingFrame") local MusicListLayout = Instance.new("UIListLayout")
     MusicScroll.Size = UDim2.new(1, 0, 1, 0) MusicScroll.BackgroundTransparency = 1 MusicScroll.ScrollBarThickness = 3 MusicScroll.ScrollBarImageColor3 = RandomThemeColor MusicScroll.Parent = MusicPage
     MusicListLayout.SortOrder = Enum.SortOrder.LayoutOrder MusicListLayout.Padding = UDim.new(0, 5) MusicListLayout.Parent = MusicScroll
 
-    -- [مصفوفة الأغاني بالكامل مسمّاة بأرقامها]
     local VerifiedLibrary = {
         {Name = "🎵 129793988394147", Code = "129793988394147"},
         {Name = "🎵 131732248464220", Code = "131732248464220"},
@@ -500,7 +516,43 @@ local _S, _R = pcall(function()
     MusicScroll.CanvasSize = UDim2.new(0, 0, 0, MusicListLayout.AbsoluteContentSize.Y + 5)
 
     ---------------------------------------------------------
-    -- [5. صفحة اخرى - مانع التقطيع]
+    -- [5. صفحة اسكنات الاولاد - تعديل الإرسال التلقائي للشات والمود]
+    ---------------------------------------------------------
+    local BoysScroll = Instance.new("ScrollingFrame") local BoysListLayout = Instance.new("UIListLayout")
+    BoysScroll.Size = UDim2.new(1, 0, 1, 0) BoysScroll.BackgroundTransparency = 1 BoysScroll.ScrollBarThickness = 3 BoysScroll.ScrollBarImageColor3 = RandomThemeColor BoysScroll.Parent = BoysSkinsPage
+    BoysListLayout.SortOrder = Enum.SortOrder.LayoutOrder BoysListLayout.Padding = UDim.new(0, 5) BoysListLayout.Parent = BoysScroll
+
+    local TargetsBoysSkins = {
+        "111ZeZoo111", "mes100244", "thunder5p", "LH_7n", "tarknzal", 
+        "tllwp", "dnsnff", "4liill77", "nvm", "36", "ohorphic", 
+        "A1CKER", "Fikzyyx", "mohammeedd78"
+    }
+
+    for _, boyName in ipairs(TargetsBoysSkins) do
+        local SkinFrame = Instance.new("Frame") local SFC = Instance.new("UICorner")
+        SkinFrame.Size = UDim2.new(1, -6, 0, 34) SkinFrame.BackgroundColor3 = Color3.fromRGB(24, 20, 35) SkinFrame.Parent = BoysScroll
+        SFC.CornerRadius = UDim.new(0, 5) SFC.Parent = SkinFrame
+        
+        local BoyLabel = Instance.new("TextLabel") BoyLabel.Size = UDim2.new(0, 220, 1, 0) BoyLabel.Position = UDim2.new(0, 8, 0, 0) BoyLabel.BackgroundTransparency = 1 BoyLabel.Font = Enum.Font.GothamBold BoyLabel.Text = "🕺 " .. boyName BoyLabel.TextColor3 = Color3.fromRGB(255, 255, 255) BoyLabel.TextSize = 10 BoyLabel.TextXAlignment = Enum.TextXAlignment.Left BoyLabel.Parent = SkinFrame
+        
+        local UseSkinBtn = Instance.new("TextButton") local USBC = Instance.new("UICorner")
+        UseSkinBtn.Size = UDim2.new(0, 75, 0, 24) UseSkinBtn.Position = UDim2.new(1, -85, 0.5, -12) UseSkinBtn.BackgroundColor3 = Color3.fromRGB(65, 25, 110) UseSkinBtn.Font = Enum.Font.GothamBold UseSkinBtn.Text = "تحويل ⚡" UseSkinBtn.TextColor3 = Color3.fromRGB(240, 220, 255) UseSkinBtn.TextSize = 9 UseSkinBtn.Parent = SkinFrame USBC.CornerRadius = UDim.new(0, 4) USBC.Parent = UseSkinBtn
+        
+        UseSkinBtn.MouseButton1Click:Connect(function()
+            local charCommand = ";char me " .. boyName
+            
+            -- تنفيذ الأمر وإرساله مباشرة دون نسخ
+            pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({charCommand})) end)
+            pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({charCommand})) end)
+            
+            UseSkinBtn.Text = "تم التنفيذ!" UseSkinBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 80) UseSkinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            CreateNotification("تم إرسال الأمر: " .. charCommand) task.wait(1) UseSkinBtn.Text = "تحويل ⚡" UseSkinBtn.BackgroundColor3 = Color3.fromRGB(65, 25, 110) UseSkinBtn.TextColor3 = Color3.fromRGB(240, 220, 255)
+        end)
+    end
+    BoysScroll.CanvasSize = UDim2.new(0, 0, 0, BoysListLayout.AbsoluteContentSize.Y + 5)
+
+    ---------------------------------------------------------
+    -- [6. صفحة اخرى - مانع التقطيع]
     ---------------------------------------------------------
     local OtherContainer = Instance.new("Frame") OtherContainer.Size = UDim2.new(1, 0, 1, 0) OtherContainer.BackgroundTransparency = 1 OtherContainer.Parent = OtherPage
 
@@ -554,5 +606,3 @@ local _S, _R = pcall(function()
         end
     end)
 end)
-
-_OPI_DATA, _OPI_KEY, _OPI_DEC, _OPI_XOR = nil, nil, nil, nil
