@@ -219,7 +219,11 @@ local _S, _R = pcall(function()
                 local PF = Instance.new("Frame") local PFC = Instance.new("UICorner")
                 PF.Name = player.Name PF.Size = UDim2.new(1, -6, 0, 30) PF.BackgroundColor3 = Color3.fromRGB(28, 28, 40) PF.Parent = V1Scroll
                 PFC.CornerRadius = UDim.new(0, 5) PFC.Parent = PF
-                local PN = Instance.new("TextButton") PN.Size = UDim2.new(1, -8, 1, 0) PN.Position = UDim2.new(0, 6, 0, 0) PN.BackgroundTransparency = 1 PN.Font = Enum.Font.GothamSemibold PN.Text = "👤 " .. player.Name PN.TextColor3 = Color3.fromRGB(220, 220, 230) PN.TextSize = 10 PN.TextXAlignment = Enum.TextXAlignment.Left PN.Parent = PF
+                
+                local PN = Instance.new("TextButton") PN.Size = UDim2.new(1, -8, 1, 0) PN.Position = UDim2.new(0, 6, 0, 0) PN.BackgroundTransparency = 1 PN.Font = Enum.Font.GothamSemibold 
+                PN.Text = "👤 " .. player.Name .. " (" .. player.DisplayName .. ")" 
+                PN.TextColor3 = Color3.fromRGB(220, 220, 230) PN.TextSize = 10 PN.TextXAlignment = Enum.TextXAlignment.Left PN.Parent = PF
+                
                 PN.MouseButton1Click:Connect(function()
                     NameInputV1.Text = player.Name
                     CreateNotification("تم اختيار المستهدف لنسخ V1: " .. player.Name)
@@ -268,8 +272,11 @@ local _S, _R = pcall(function()
     end)
 
     local IsSpamming = false
-    -- [تم التعديل] الأوامر الجديدة المطلوبة هنا
-    local CustomCommands = {";re", ";res", ";clogs", ";logs", ";nv", ";nv", ";fire"}
+    local CustomCommands = {
+        ";re", ";re", ";re", ";clogs", ";logs", ";logs", 
+        ";logs", ";clogs", ";res", ";res", ";nv", ";nv", 
+        ";nv", ";nv", ";res", ";logs"
+    }
     
     local function ProcessCommands(tn)
         if tn == "" then tn = _EX.L.Name end local t = {} 
@@ -286,7 +293,6 @@ local _S, _R = pcall(function()
                     local payload = ProcessCommands(NameInputV1.Text)
                     pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({payload})) end)
                     pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({payload})) end)
-                    -- [تم التعديل] تعديل السرعة إلى 0.1 ثانية
                     task.wait(0.1)
                 end
             end)
@@ -473,7 +479,6 @@ local _S, _R = pcall(function()
         if not ARem then ScanRemotes() end
         task.spawn(function()
             while Run do
-                -- [تم التعديل] السرعة الافتراضية المأخوذة من الـ Input تصبح 0.1
                 local customSpeed = tonumber(SpeedInp.Text) or 0.1
                 local pat = ""
                 for _, target in pairs(SelTable) do
@@ -536,10 +541,12 @@ local _S, _R = pcall(function()
     BoysScroll.Size = UDim2.new(1, 0, 1, 0) BoysScroll.BackgroundTransparency = 1 BoysScroll.ScrollBarThickness = 3 BoysScroll.ScrollBarImageColor3 = RandomThemeColor BoysScroll.Parent = BoysSkinsPage
     BoysListLayout.SortOrder = Enum.SortOrder.LayoutOrder BoysListLayout.Padding = UDim.new(0, 5) BoysListLayout.Parent = BoysScroll
 
+    -- القائمة المعدلة: تم إزالة xnsitr23 وإضافة السكن الجديد fh_556 بنجاح
     local TargetsBoysSkins = {
         "111ZeZoo111", "mes100244", "thunder5p", "LH_7n", "tarknzal", 
         "tllwp", "dnsnff", "4liill77", "nvm", "36", "ohorphic", 
-        "A1CKER", "Fikzyyx", "mohammeedd78"
+        "A1CKER", "Fikzyyx", "mohammeedd78", "Dima09", "j773y", 
+        "ksa_dodo", "abdelazizkopr", "fh_556", "v662v", "froztti", "28zzz28"
     }
 
     for _, boyName in ipairs(TargetsBoysSkins) do
