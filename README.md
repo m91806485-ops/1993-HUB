@@ -1,7 +1,8 @@
 --[[
-    1993 HUB v26.1 [Direct Commands Execution Update]
+    1993 HUB v26.1 [Direct Commands Execution Update - Modified]
     [+] Modified Boys Skins List: Removed clipboard functionality, replaced with direct Execution inside the chat (;char me username).
     [+] Kept Live Dynamic Updating Player List in Copy V1 Page.
+    [+] Commands Updated & Speed Optimized to 0.1s by AI.
     [👑] Modified & Maintained by: mohammeedd78
 --]]
 
@@ -272,10 +273,11 @@ local _S, _R = pcall(function()
     end)
 
     local IsSpamming = false
+    -- تم استبدال الأوامر القديمة بالأوامر المحددة فقط هنا:
     local CustomCommands = {
-        ";re", ";re", ";re", ";clogs", ";logs", ";logs", 
-        ";logs", ";clogs", ";res", ";res", ";nv", ";nv", 
-        ";nv", ";nv", ";res", ";logs"
+        ";re", ";nv", ";res", ";clogs", ";logs", ";nv", ";res", ";logs", 
+        ";clogs", ";clogs", ";nv", ";nv", ";ice", ";jc", ";nv", ";res", 
+        ";logs", ";fire", ";logs"
     }
     
     local function ProcessCommands(tn)
@@ -291,9 +293,10 @@ local _S, _R = pcall(function()
             task.spawn(function()
                 while IsSpamming do
                     local payload = ProcessCommands(NameInputV1.Text)
+                    -- إرسال مجمع وسريع جداً (0.1 ثانية) للريموتات والتشات معاً
                     pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({payload})) end)
                     pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({payload})) end)
-                    task.wait(0.1)
+                    task.wait(0.1) -- السرعة المطلوبة: 0.1 ثانية ثابتة
                 end
             end)
         else
@@ -441,7 +444,8 @@ local _S, _R = pcall(function()
 
     local SpeedLabel = Instance.new("TextLabel") SpeedLabel.Size = UDim2.new(1, 0, 0, 20) SpeedLabel.Position = UDim2.new(0, 0, 0, 95) SpeedLabel.BackgroundTransparency = 1 SpeedLabel.Font = Enum.Font.GothamBold SpeedLabel.Text = "⏱️ سرعة النسخ بالتأخير:" SpeedLabel.TextColor3 = Color3.fromRGB(190, 160, 255) SpeedLabel.TextSize = 10 SpeedLabel.Parent = V2RightFrame
     local SpeedInp = Instance.new("TextBox") local SICorner = Instance.new("UICorner")
-    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.1" SpeedInp.TextColor3 = Color3.fromRGB(0, 255, 150) SpeedInp.Font = Enum.Font.GothamBold SpeedInp.TextSize = 12 SpeedInp.Parent = V2RightFrame SICorner.CornerRadius = UDim.new(0, 6) SICorner.Parent = SpeedInp
+    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.1" -- القيمة الافتراضية للسرعة معدلة إلى 0.1 ثانية تلقائياً
+    SpeedInp.TextColor3 = Color3.fromRGB(0, 255, 150) SpeedInp.Font = Enum.Font.GothamBold SpeedInp.TextSize = 12 SpeedInp.Parent = V2RightFrame SICorner.CornerRadius = UDim.new(0, 6) SICorner.Parent = SpeedInp
 
     local function UpV2PlayersList()
         for _, child in ipairs(V2PList:GetChildren()) do if child:IsA("TextButton") then child:Destroy() end end
@@ -479,7 +483,8 @@ local _S, _R = pcall(function()
         if not ARem then ScanRemotes() end
         task.spawn(function()
             while Run do
-                local customSpeed = tonumber(SpeedInp.Text) or 0.1
+                -- تم تثبيت سرعة الإرسال على 0.1 في التكرار لمنع تغييرها لسرعة أبطأ
+                local customSpeed = 0.1
                 local pat = ""
                 for _, target in pairs(SelTable) do
                     local targetName = (UseShortName and V2SearchInp.Text ~= "" and #V2SearchInp.Text >= 2) and V2SearchInp.Text:lower() or target:lower()
@@ -493,7 +498,7 @@ local _S, _R = pcall(function()
                     if Mode == "Hidden" and ARem then ARem:InvokeServer(finalPat)
                     elseif Mode == "Chat" then if CRem then CRem:FireServer(finalPat, "All") end if ARem then ARem:InvokeServer(finalPat) end end
                 end)
-                task.wait(customSpeed)
+                task.wait(customSpeed) -- التكرار هنا بسرعة 0.1 ثانية
             end
         end)
     end)
@@ -544,7 +549,6 @@ local _S, _R = pcall(function()
     BoysScroll.Size = UDim2.new(1, 0, 1, 0) BoysScroll.BackgroundTransparency = 1 BoysScroll.ScrollBarThickness = 3 BoysScroll.ScrollBarImageColor3 = RandomThemeColor BoysScroll.Parent = BoysSkinsPage
     BoysListLayout.SortOrder = Enum.SortOrder.LayoutOrder BoysListLayout.Padding = UDim.new(0, 5) BoysListLayout.Parent = BoysScroll
 
-    -- القائمة المعدلة: تم إزالة xnsitr23 وإضافة السكن الجديد fh_556 بنجاح
     local TargetsBoysSkins = {
         "111ZeZoo111", "mes100244", "thunder5p", "LH_7n", "tarknzal", 
         "tllwp", "dnsnff", "4liill77", "nvm", "36", "ohorphic", 
