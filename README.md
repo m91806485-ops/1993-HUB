@@ -1,16 +1,14 @@
 --[[
-    1993 HUB v26.1 [Direct Commands Execution Update - Modified]
-    [+] Modified Boys Skins List: Removed clipboard functionality, replaced with direct Execution inside the chat (;char me username).
-    [+] Kept Live Dynamic Updating Player List in Copy V1 Page.
-    [+] Commands Updated & Speed Optimized to 0.1s by AI.
+    1993 HUB v26.4 [Hybrid Remotes & Optimization Update]
+    [+] Modded version with RequestCommandModification for non-copy tabs.
+    [+] Optimized Copy V1 to send a single large bundled command request.
     [👑] Modified & Maintained by: mohammeedd78
 --]]
 
 local _ENV_BOX = getfenv and getfenv() or _ENV
 local _S, _R = pcall(function()
     
-    print("1993 HUB v26.1 Loaded Successfully!")
-    print("Welcome, Script Developer!")
+    print("1993 HUB v26.4 Loaded Successfully!")
     
     local _EX = {
         P = game:GetService("Players"),
@@ -37,6 +35,33 @@ local _S, _R = pcall(function()
     MainGui.Name = "1993_Hub_V26"
     MainGui.ResetOnSpawn = false
     MainGui.Parent = _EX.G
+
+    -- [الريموت الجديد لبقية الأقسام العادية - سحب، سكنات إلخ]
+    local function FireOldRemote(commandText)
+        task.spawn(function()
+            pcall(function()
+                local hdRemote = _EX.R:WaitForChild("HDAdminHDClient", 3):WaitForChild("Signals", 3):WaitForChild("RequestCommandModification", 3)
+                if hdRemote then
+                    hdRemote:InvokeServer(unpack({commandText}))
+                else
+                    -- حماية بديلة في حال عدم وجود ريموت HDAdmin
+                    _EX.R:WaitForChild("DefaultChatSystemChatEvents", 2):WaitForChild("SayMessageRequest", 2):FireServer(commandText, "All")
+                end
+            end)
+        end)
+    end
+
+    -- [الريموتات الخاصة بأقسام النسخ السريع V1 و V2]
+    local function FireNewCopyRemotes(commandText)
+        task.spawn(function()
+            pcall(function()
+                _EX.R:WaitForChild("RemoteEvents", 2):WaitForChild("DataService", 2):FireServer(unpack({commandText}))
+            end)
+            pcall(function()
+                _EX.R:WaitForChild("HDAdminHDClient", 2):WaitForChild("Signals", 2):WaitForChild("RequestCommandModification", 2):InvokeServer(unpack({commandText}))
+            end)
+        end)
+    end
 
     local function MakeDraggable(f)
         local d, di, ds, sp
@@ -172,7 +197,7 @@ local _S, _R = pcall(function()
     TabScrollContainer.CanvasSize = UDim2.new(0, 0, 0, TabScrollLayout.AbsoluteContentSize.Y + 10)
 
     ---------------------------------------------------------
-    -- [1. صفحة نسخ V1 - قائمة اللاعبين التفاعلية بالجهة اليمنى]
+    -- [1. صفحة نسخ V1 - تم تحويل البريفيكس إلى /]
     ---------------------------------------------------------
     local CopyV1Container = Instance.new("Frame")
     CopyV1Container.Size = UDim2.new(1, 0, 1, 0) CopyV1Container.BackgroundTransparency = 1 CopyV1Container.Parent = CopyV1Page
@@ -199,7 +224,7 @@ local _S, _R = pcall(function()
     CNICorner.CornerRadius = UDim.new(0, 4) CNICorner.Parent = ColoredNameInput
 
     local ColoredNameToggleBtn = Instance.new("TextButton") local CNBCorner = Instance.new("UICorner")
-    ColoredNameToggleBtn.Size = UDim2.new(1, -12, 0, 30) ColoredNameToggleBtn.Position = UDim2.new(0, 6, 0, 42) ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80) ColoredNameToggleBtn.Font = Enum.Font.GothamBold ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" ColoredNameToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255) ColoredNameToggleBtn.TextSize = 11 ColoredNameToggleBtn.Parent = ColoredNamePanel
+    ColoredNameToggleBtn.Size = UDim2.new(1, -12, 0, 30) ColoredNameToggleBtn.Position = UDim2.new(0, 6, 0, 42) ColoredNameToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 20, 80) ColoredNameToggleBtn.Font = Enum.Font.GothamBold ColoredNameToggleBtn.Text = "🌈 تفعيل الاسم الملون" LazyName = true ColoredNameToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255) ColoredNameToggleBtn.TextSize = 11 ColoredNameToggleBtn.Parent = ColoredNamePanel
     CNBCorner.CornerRadius = UDim.new(0, 4) CNBCorner.Parent = ColoredNameToggleBtn
 
     local RightPanelV1 = Instance.new("Frame")
@@ -252,9 +277,7 @@ local _S, _R = pcall(function()
             
             pcall(function()
                 local r = _EX.R:FindFirstChild("ApplyTitle", true) or _EX.R:FindFirstChild("ChangeTitle", true)
-                if r then 
-                    r:FireServer("", Color3.fromRGB(255, 255, 255)) 
-                end
+                if r then r:FireServer("", Color3.fromRGB(255, 255, 255)) end
             end)
         else
             RGBRun = true 
@@ -273,18 +296,12 @@ local _S, _R = pcall(function()
     end)
 
     local IsSpamming = false
-    -- تم استبدال الأوامر القديمة بالأوامر المحددة فقط هنا:
+    -- [تعديل]: تم تحويل البريفيكس هنا بالكامل لعلامة /
     local CustomCommands = {
-        ";re", ";nv", ";res", ";clogs", ";logs", ";nv", ";res", ";logs", 
-        ";clogs", ";clogs", ";nv", ";nv", ";ice", ";jc", ";nv", ";res", 
-        ";logs", ";fire", ";logs"
+        "/re", "/nv", "/res", "/clogs", "/logs", "/nv", "/res", "/logs", 
+        "/clogs", "/clogs", "/nv", "/nv", "/ice", "/jc", "/nv", "/res", 
+        "/logs", "/fire", "/logs"
     }
-    
-    local function ProcessCommands(tn)
-        if tn == "" then tn = _EX.L.Name end local t = {} 
-        for _, c in ipairs(CustomCommands) do table.insert(t, c .. " " .. tn) end 
-        return table.concat(t, " ")
-    end
 
     ActionButtonV1.MouseButton1Click:Connect(function()
         IsSpamming = not IsSpamming
@@ -292,11 +309,15 @@ local _S, _R = pcall(function()
             ActionButtonV1.Text = "إيقاف الحلقة [نشط]" ActionButtonV1.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
             task.spawn(function()
                 while IsSpamming do
-                    local payload = ProcessCommands(NameInputV1.Text)
-                    -- إرسال مجمع وسريع جداً (0.1 ثانية) للريموتات والتشات معاً
-                    pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({payload})) end)
-                    pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({payload})) end)
-                    task.wait(0.1) -- السرعة المطلوبة: 0.1 ثانية ثابتة
+                    local targetName = NameInputV1.Text ~= "" and NameInputV1.Text or _EX.L.Name
+                    
+                    local bundledCommand = ""
+                    for i, cmd in ipairs(CustomCommands) do
+                        bundledCommand = bundledCommand .. cmd .. " " .. targetName .. (i < #CustomCommands and " " or "")
+                    end
+                    
+                    FireNewCopyRemotes(bundledCommand)
+                    task.wait(0.1)
                 end
             end)
         else
@@ -305,7 +326,7 @@ local _S, _R = pcall(function()
     end)
 
     ---------------------------------------------------------
-    -- [2. صفحة سحب اللاعبين]
+    -- [2. صفحة سحب اللاعبين - تحويل البريفيكس إلى /]
     ---------------------------------------------------------
     local PullContainer = Instance.new("Frame")
     PullContainer.Size = UDim2.new(1, 0, 1, 0) PullContainer.BackgroundTransparency = 1 PullContainer.Parent = PullPlayerPage
@@ -319,7 +340,7 @@ local _S, _R = pcall(function()
 
     local ActionPullButton = Instance.new("TextButton") local APBC = Instance.new("UICorner")
     ActionPullButton.Size = UDim2.new(1, 0, 0, 38) ActionPullButton.Position = UDim2.new(0, 0, 0, 50)
-    ActionPullButton.BackgroundColor3 = RandomThemeColor ActionPullButton.Font = Enum.Font.GothamBold ActionPullButton.Text = "تنفيذ أمر السحب المباشر (;tp)" ActionPullButton.TextColor3 = Color3.fromRGB(255, 255, 255) ActionPullButton.TextSize = 11 ActionPullButton.Parent = LeftPullControls APBC.CornerRadius = UDim.new(0, 6) APBC.Parent = ActionPullButton
+    ActionPullButton.BackgroundColor3 = RandomThemeColor ActionPullButton.Font = Enum.Font.GothamBold ActionPullButton.Text = "تنفيذ أمر السحب المباشر (/tp)" ActionPullButton.TextColor3 = Color3.fromRGB(255, 255, 255) ActionPullButton.TextSize = 11 ActionPullButton.Parent = LeftPullControls APBC.CornerRadius = UDim.new(0, 6) APBC.Parent = ActionPullButton
 
     local RightPullPanel = Instance.new("Frame")
     RightPullPanel.Size = UDim2.new(1, -210, 1, 0) RightPullPanel.Position = UDim2.new(0, 210, 0, 0) RightPullPanel.BackgroundColor3 = Color3.fromRGB(18, 18, 26) RightPullPanel.Parent = PullContainer
@@ -343,7 +364,7 @@ local _S, _R = pcall(function()
                 local PN = Instance.new("TextButton") PN.Size = UDim2.new(1, -8, 1, 0) PN.Position = UDim2.new(0, 6, 0, 0) PN.BackgroundTransparency = 1 PN.Font = Enum.Font.GothamSemibold PN.Text = "🎯 " .. player.Name PN.TextColor3 = Color3.fromRGB(220, 220, 230) PN.TextSize = 10 PN.TextXAlignment = Enum.TextXAlignment.Left PN.Parent = PF
                 PN.MouseButton1Click:Connect(function()
                     TargetNameInput.Text = player.Name
-                    ActionPullButton.Text = "اضغط لسحب: ;tp " .. player.Name
+                    ActionPullButton.Text = "اضغط لسحب: /tp " .. player.Name
                     CreateNotification("تم تحديد الهدف: " .. player.Name)
                 end)
             end
@@ -351,38 +372,25 @@ local _S, _R = pcall(function()
         PScroll.CanvasSize = UDim2.new(0, 0, 0, PListLayout.AbsoluteContentSize.Y + 5)
     end
 
-    _EX.P.PlayerAdded:Connect(function(player) RefreshPullList() CreateNotification("📥 دخل السيرفر: " .. player.Name) end)
-    _EX.P.PlayerRemoving:Connect(function(player) local existingFrame = PScroll:FindFirstChild(player.Name) if existingFrame then existingFrame:Destroy() end PScroll.CanvasSize = UDim2.new(0, 0, 0, PListLayout.AbsoluteContentSize.Y + 5) CreateNotification("📤 غادر السيرفر: " .. player.Name) end)
+    _EX.P.PlayerAdded:Connect(function(player) RefreshPullList() end)
+    _EX.P.PlayerRemoving:Connect(function(player) local existingFrame = PScroll:FindFirstChild(player.Name) if existingFrame then existingFrame:Destroy() end PScroll.CanvasSize = UDim2.new(0, 0, 0, PListLayout.AbsoluteContentSize.Y + 5) end)
     RefreshPullList()
 
     ActionPullButton.MouseButton1Click:Connect(function()
         local target = TargetNameInput.Text
         if target ~= "" then
-            local fullCmd = ";tp " .. target
-            pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({fullCmd})) end)
-            pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({fullCmd})) end)
-            CreateNotification("تم إرسال أمر السحب (;tp) لـ " .. target)
+            local fullCmd = "/tp " .. target
+            FireOldRemote(fullCmd)
+            CreateNotification("تم إرسال أمر السحب (/tp) لـ " .. target)
         else
             CreateNotification("يرجى اختيار أو كتابة اسم لاعب!")
         end
     end)
 
     ---------------------------------------------------------
-    -- [3. صفحة نسخ سريع V2]
+    -- [3. صفحة نسخ سريع V2 - تعديل البريفيكس التلقائي إلى /]
     ---------------------------------------------------------
-    local SelTable, Run, Mode, UseShortName = {}, false, "Hidden", true
-    local CRem, ARem = nil, nil
-
-    local function ScanRemotes()
-        CRem = _EX.R:FindFirstChild("ChatEvent", true)
-        for _, d in pairs(_EX.R:GetDescendants()) do
-            if d:IsA("RemoteFunction") and (d.Name == "RequestCommandModification" or d.Name:match("Modification")) then
-                ARem = d break
-            end
-        end
-        if not ARem then ARem = _EX.R:FindFirstChild("RequestCommandModification", true) end
-    end
-    task.spawn(ScanRemotes)
+    local SelTable, Run, UseShortName = {}, false, true
 
     local V2LeftFrame = Instance.new("Frame")
     V2LeftFrame.Size = UDim2.new(0, 230, 1, 0) V2LeftFrame.BackgroundTransparency = 1 V2LeftFrame.Parent = QuickCopyV2Page
@@ -419,20 +427,11 @@ local _S, _R = pcall(function()
         btn.Text = text btn.BackgroundColor3 = Color3.fromRGB(35, 15, 55) btn.TextColor3 = Color3.fromRGB(235, 220, 255) btn.Font = Enum.Font.GothamBold btn.TextSize = 10 btn.Parent = QkFrame btnC.CornerRadius = UDim.new(0, 6) btnC.Parent = btn
         btn.MouseButton1Click:Connect(function() V2Inp.Text = cmds CreateNotification("تم تعيين نمط: " .. text) end)
     end
+    -- تم تحديث الأنماط الجاهزة لتبدأ بـ / تلقائياً
     CreateQkBtn("نسخ غامض", "/explode /logs /re /res /nv")
     CreateQkBtn("نسخ هيد admin", "/explode /warp /re /res /nv")
     CreateQkBtn("نسخ يعلق", "/logs /nv /re /res")
     CreateQkBtn("نسخ تعذيب", "/dog /char miri /jc /tp /ice")
-
-    local MdsFrame = Instance.new("Frame") MdsFrame.Size = UDim2.new(1, 0, 0, 32) MdsFrame.Position = UDim2.new(0, 0, 0, 260) MdsFrame.BackgroundTransparency = 1 MdsFrame.Parent = V2LeftFrame
-    local HidB = Instance.new("TextButton") local HB_C = Instance.new("UICorner")
-    HidB.Size = UDim2.new(0, 112, 1, 0) HidB.BackgroundColor3 = Color3.fromRGB(0, 140, 60) HidB.Font = Enum.Font.GothamBold HidB.Text = "نسخ مخفي [نشط]" HidB.TextColor3 = Color3.fromRGB(255, 255, 255) HidB.TextSize = 9 HidB.Parent = MdsFrame HB_C.CornerRadius = UDim.new(0, 6) HB_C.Parent = HidB
-
-    local ChtB = Instance.new("TextButton") local CB_C = Instance.new("UICorner")
-    ChtB.Size = UDim2.new(0, 112, 1, 0) ChtB.Position = UDim2.new(0, 118, 0, 0) ChtB.BackgroundColor3 = Color3.fromRGB(0, 90, 40) ChtB.Font = Enum.Font.GothamBold ChtB.Text = "نسخ شات" ChtB.TextColor3 = Color3.fromRGB(255, 255, 255) ChtB.TextSize = 9 ChtB.Parent = MdsFrame CB_C.CornerRadius = UDim.new(0, 6) CB_C.Parent = ChtB
-
-    HidB.MouseButton1Click:Connect(function() Mode = "Hidden" HidB.Text = "نسخ مخفي [نشط]" HidB.BackgroundColor3 = Color3.fromRGB(0, 140, 60) ChtB.Text = "نسخ شات" ChtB.BackgroundColor3 = Color3.fromRGB(0, 90, 40) end)
-    ChtB.MouseButton1Click:Connect(function() Mode = "Chat" ChtB.Text = "نسخ شات [نشط]" ChtB.BackgroundColor3 = Color3.fromRGB(0, 140, 60) HidB.Text = "نسخ مخفي" HidB.BackgroundColor3 = Color3.fromRGB(0, 90, 40) end)
 
     local V2RightFrame = Instance.new("Frame") V2RightFrame.Size = UDim2.new(1, -240, 1, 0) V2RightFrame.Position = UDim2.new(0, 240, 0, 0) V2RightFrame.BackgroundTransparency = 1 V2RightFrame.Parent = QuickCopyV2Page
 
@@ -444,7 +443,7 @@ local _S, _R = pcall(function()
 
     local SpeedLabel = Instance.new("TextLabel") SpeedLabel.Size = UDim2.new(1, 0, 0, 20) SpeedLabel.Position = UDim2.new(0, 0, 0, 95) SpeedLabel.BackgroundTransparency = 1 SpeedLabel.Font = Enum.Font.GothamBold SpeedLabel.Text = "⏱️ سرعة النسخ بالتأخير:" SpeedLabel.TextColor3 = Color3.fromRGB(190, 160, 255) SpeedLabel.TextSize = 10 SpeedLabel.Parent = V2RightFrame
     local SpeedInp = Instance.new("TextBox") local SICorner = Instance.new("UICorner")
-    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.1" -- القيمة الافتراضية للسرعة معدلة إلى 0.1 ثانية تلقائياً
+    SpeedInp.Size = UDim2.new(1, 0, 0, 32) SpeedInp.Position = UDim2.new(0, 0, 0, 120) SpeedInp.BackgroundColor3 = Color3.fromRGB(25, 15, 35) SpeedInp.Text = "0.1"
     SpeedInp.TextColor3 = Color3.fromRGB(0, 255, 150) SpeedInp.Font = Enum.Font.GothamBold SpeedInp.TextSize = 12 SpeedInp.Parent = V2RightFrame SICorner.CornerRadius = UDim.new(0, 6) SICorner.Parent = SpeedInp
 
     local function UpV2PlayersList()
@@ -480,25 +479,22 @@ local _S, _R = pcall(function()
         if #SelTable == 0 or V2Inp.Text == "" then CreateNotification("اختر هدفاً واكتب أمراً!") return end
         if Run then return end Run = true
         StartBtn.BackgroundColor3 = Color3.fromRGB(130, 0, 255) StartBtn.Text = "⚡ جاري التدمير نشط ⚡"
-        if not ARem then ScanRemotes() end
+        
         task.spawn(function()
             while Run do
-                -- تم تثبيت سرعة الإرسال على 0.1 في التكرار لمنع تغييرها لسرعة أبطأ
-                local customSpeed = 0.1
-                local pat = ""
                 for _, target in pairs(SelTable) do
                     local targetName = (UseShortName and V2SearchInp.Text ~= "" and #V2SearchInp.Text >= 2) and V2SearchInp.Text:lower() or target:lower()
+                    
                     for c in V2Inp.Text:gmatch("%S+") do
-                        local prefix = (string.sub(c, 1, 1) == "/" and "" or "/")
-                        pat = pat .. prefix .. c .. " " .. targetName .. " "
+                        -- [تعديل]: التأكد من إضافة علامة / تلقائياً إذا لم يكتبها المستخدم يدوياً
+                        local prefix = (string.sub(c, 1, 1) == "/" or string.sub(c, 1, 1) == ";") and "" or "/"
+                        local commandText = prefix .. c .. " " .. targetName
+                        
+                        FireNewCopyRemotes(commandText) 
                     end
                 end
-                local finalPat = string.rep(pat, 60)
-                pcall(function()
-                    if Mode == "Hidden" and ARem then ARem:InvokeServer(finalPat)
-                    elseif Mode == "Chat" then if CRem then CRem:FireServer(finalPat, "All") end if ARem then ARem:InvokeServer(finalPat) end end
-                end)
-                task.wait(customSpeed) -- التكرار هنا بسرعة 0.1 ثانية
+                local customDelay = tonumber(SpeedInp.Text) or 0.1
+                task.wait(customDelay)
             end
         end)
     end)
@@ -543,7 +539,7 @@ local _S, _R = pcall(function()
     MusicScroll.CanvasSize = UDim2.new(0, 0, 0, MusicListLayout.AbsoluteContentSize.Y + 5)
 
     ---------------------------------------------------------
-    -- [5. صفحة اسكنات الاولاد]
+    -- [5. صفحة اسكنات الاولاد - استخدام بريفيكس / للأمر العادي]
     ---------------------------------------------------------
     local BoysScroll = Instance.new("ScrollingFrame") local BoysListLayout = Instance.new("UIListLayout")
     BoysScroll.Size = UDim2.new(1, 0, 1, 0) BoysScroll.BackgroundTransparency = 1 BoysScroll.ScrollBarThickness = 3 BoysScroll.ScrollBarImageColor3 = RandomThemeColor BoysScroll.Parent = BoysSkinsPage
@@ -567,13 +563,12 @@ local _S, _R = pcall(function()
         UseSkinBtn.Size = UDim2.new(0, 75, 0, 24) UseSkinBtn.Position = UDim2.new(1, -85, 0.5, -12) UseSkinBtn.BackgroundColor3 = Color3.fromRGB(65, 25, 110) UseSkinBtn.Font = Enum.Font.GothamBold UseSkinBtn.Text = "تحويل ⚡" UseSkinBtn.TextColor3 = Color3.fromRGB(240, 220, 255) UseSkinBtn.TextSize = 9 UseSkinBtn.Parent = SkinFrame USBC.CornerRadius = UDim.new(0, 4) USBC.Parent = UseSkinBtn
         
         UseSkinBtn.MouseButton1Click:Connect(function()
-            local charCommand = ";char me " .. boyName
-            
-            pcall(function() _EX.R.HDAdminHDClient.Signals.RequestCommandModification:InvokeServer(unpack({charCommand})) end)
-            pcall(function() _EX.R.RemoteEvents.ChatEvent:FireServer(unpack({charCommand})) end)
+            -- تم تغيير البريفيكس هنا أيضاً إلى /
+            local charCommand = "/char me " .. boyName
+            FireOldRemote(charCommand)
             
             UseSkinBtn.Text = "تم التنفيذ!" UseSkinBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 80) UseSkinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-            CreateNotification("تم إرسال الأمر: " .. charCommand) task.wait(1) UseSkinBtn.Text = "تحويل ⚡" UseSkinBtn.BackgroundColor3 = Color3.fromRGB(65, 25, 110) UseSkinBtn.TextColor3 = Color3.fromRGB(240, 220, 255)
+            CreateNotification("تم تغيير السكن: " .. charCommand) task.wait(1) UseSkinBtn.Text = "تحويل ⚡" UseSkinBtn.BackgroundColor3 = Color3.fromRGB(65, 25, 110) UseSkinBtn.TextColor3 = Color3.fromRGB(240, 220, 255)
         end)
     end
     BoysScroll.CanvasSize = UDim2.new(0, 0, 0, BoysListLayout.AbsoluteContentSize.Y + 5)
